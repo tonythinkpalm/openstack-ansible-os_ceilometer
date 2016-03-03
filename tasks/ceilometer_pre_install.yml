@@ -102,7 +102,3 @@
   tags:
     - ceilometer-dirs
     - ceilometer-logs
-
-- include: ceilometer_messaging_setup.yml
-  when: >
-    inventory_hostname == groups['ceilometer_api'][0]
