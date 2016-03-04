@@ -77,7 +77,9 @@ messaging_urls = rabbit://{{ keystone_rabbitmq_userid }}:{{ keystone_rabbitmq_pa
 [database]
 metering_connection = {{ ceilometer_connection_string }}
 event_connection = {{ ceilometer_connection_string }}
+{% if groups['aodh_all'] is defined and groups['aodh_all'] | length > 0 %}
 alarm_connection = {{ aodh_connection_string }}
+{% endif %}
 
 [keystone_authtoken]
 insecure = {{ keystone_service_internaluri_insecure | bool }}
