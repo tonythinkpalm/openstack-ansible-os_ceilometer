@@ -31,4 +31,6 @@ galaxy_info:
     - openstack
 dependencies:
   - openstack_openrc
-  - pip_lock_down
+  - role: pip_lock_down
+    when:
+      - not ceilometer_developer_mode | bool
