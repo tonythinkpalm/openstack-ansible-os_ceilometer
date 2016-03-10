@@ -88,6 +88,7 @@ insecure = {{ keystone_service_internaluri_insecure | bool }}
 signing_dir = /var/cache/ceilometer
 auth_uri = {{ keystone_service_internaluri }}
 auth_type = {{ ceilometer_keystone_auth_plugin }}
+auth_url = {{ keystone_service_adminuri }}
 project_domain_id = {{ ceilometer_service_project_domain_id }}
 user_domain_id = {{ ceilometer_service_user_domain_id }}
 project_name = {{ ceilometer_service_project_name }}
@@ -108,7 +109,7 @@ telemetry_secret = {{ ceilometer_telemetry_secret }}
 
 [service_credentials]
 insecure = {{ keystone_service_internaluri_insecure | bool }}
-auth_url = {{ keystone_service_adminurl }}
+auth_url = {{ keystone_service_adminuri }}
 auth_plugin = {{ ceilometer_keystone_auth_plugin }}
 project_domain_id = {{ ceilometer_service_project_domain_id }}
 user_domain_id = {{ ceilometer_service_user_domain_id }}
