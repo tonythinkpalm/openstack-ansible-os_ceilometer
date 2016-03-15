@@ -241,6 +241,7 @@
     keystone_venv_tag: "testing"
     keystone_developer_mode: true
     keystone_git_install_branch: a55128044f763f5cfe2fdc57c738eaca97636448
+    keystone_requirements_git_install_branch: 332278d456e06870150835564342570ec9d5f5a0
     keystone_auth_admin_token: "SuperSecreteTestToken"
     keystone_auth_admin_password: "SuperSecretePassword"
     keystone_service_password: "secrete"
@@ -312,6 +313,7 @@
     ceilometer_venv_tag: "testing"
     ceilometer_developer_mode: true
     ceilometer_git_install_branch: 333024b69aa7810e78aef85e5171cfd6dbd6b740 # HEAD of "master" as of 17.01.2016
+    ceilometer_requirements_git_install_branch: 332278d456e06870150835564342570ec9d5f5a0
     ceilometer_service_password: secrete
     ceilometer_telemetry_secret: secrete
     ceilometer_container_db_password: secrete
