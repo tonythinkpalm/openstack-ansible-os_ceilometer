@@ -68,7 +68,7 @@
   roles:
     - role: "lxc_hosts"
       lxc_net_address: 10.100.100.1
-      lxc_net_dhcp_range: 10.100.100.2,10.100.100.253
+      lxc_net_dhcp_range: 10.100.100.8,10.100.100.253
       lxc_net_bridge: lxcbr0
       lxc_kernel_options:
         - { key: 'fs.inotify.max_user_instances', value: 1024 }
@@ -113,8 +113,8 @@
         physical_host: localhost
         container_name: "{{ item.name }}"
       with_items:
-        - { name: "infra1", service: "infra1", address: "10.100.100.101", groups: "all,all_containers,rabbitmq_all,galera_all,service_all" }
-        - { name: "openstack1", service: "openstack1", address: "10.100.100.102", groups: "all,all_containers,keystone_all,ceilometer_api,ceilometer_collector,ceilometer_agent_central,ceilometer_agent_notification,ceilometer_agent_compute,ceilometer_all" }
+        - { name: "infra1", service: "infra1", address: "10.100.100.2", groups: "all,all_containers,rabbitmq_all,galera_all,service_all" }
+        - { name: "openstack1", service: "openstack1", address: "10.100.100.3", groups: "all,all_containers,keystone_all,ceilometer_api,ceilometer_collector,ceilometer_agent_central,ceilometer_agent_notification,ceilometer_agent_compute,ceilometer_all" }
 
 - name: Playbook for creating containers
   hosts: all_containers
@@ -149,7 +149,7 @@
       lineinfile:
         dest: /etc/mongodb.conf
         regexp: "^(#)?bind_ip"
-        line: "bind_ip = 10.100.100.101"
+        line: "bind_ip = 10.100.100.2"
       register: mongodb_bind
     - name: Enable the MongoDB smallfiles option
       lineinfile:
@@ -166,7 +166,7 @@
       register: mongodb_restart
     - name: Wait for mongodb to come back online after the restart
       wait_for:
-        host: "10.100.100.101"
+        host: "10.100.100.2"
         port: 27017
         delay: 5
         timeout: 30
@@ -174,11 +174,11 @@
         - mongodb_restart is defined
         - mongodb_restart | changed
     - name: Test mongodb connectivity
-      command: "mongo --host 10.100.100.101 --eval ' '"
+      command: "mongo --host 10.100.100.2 --eval ' '"
       changed_when: False
     - name: Add ceilometer database user
       mongodb_user:
-        login_host: "10.100.100.101"
+        login_host: "10.100.100.2"
         database: ceilometer
         name: ceilometer
         password: secrete
@@ -199,9 +199,9 @@
       galera_server_id: "{{ inventory_hostname | string_2_int }}"
   vars:
     packages_mongodb:
-    - mongodb-clients
-    - mongodb-server
-    - python-pymongo
+      - mongodb-clients
+      - mongodb-server
+      - python-pymongo
 
 - name: Playbook for deploying keystone
   hosts: keystone_all
@@ -212,7 +212,7 @@
       rabbitmq_vhost:
         name: "{{ keystone_rabbitmq_vhost }}"
         state: "present"
-      delegate_to: "10.100.100.101"
+      delegate_to: "10.100.100.2"
       when: inventory_hostname == groups['keystone_all'][0]
     - name: Ensure rabbitmq user
       rabbitmq_user:
@@ -223,7 +223,7 @@
         read_priv: ".*"
         write_priv: ".*"
         state: "present"
-      delegate_to: "10.100.100.101"
+      delegate_to: "10.100.100.2"
       when: inventory_hostname == groups['keystone_all'][0]
     - name: Create DB for service
       mysql_db:
@@ -232,7 +232,7 @@
         login_host: "localhost"
         name: "{{ keystone_galera_database }}"
         state: "present"
-      delegate_to: "10.100.100.101"
+      delegate_to: "10.100.100.2"
       when: inventory_hostname == groups['keystone_all'][0]
     - name: Grant access to the DB for the service
       mysql_user:
@@ -247,14 +247,14 @@
       with_items:
         - "localhost"
         - "%"
-      delegate_to: "10.100.100.101"
+      delegate_to: "10.100.100.2"
       when: inventory_hostname == groups['keystone_all'][0]
   roles:
     - role: os_keystone
   vars:
-    external_lb_vip_address: 10.100.100.102
-    internal_lb_vip_address: 10.100.100.102
-    keystone_galera_address: 10.100.100.101
+    external_lb_vip_address: 10.100.100.3
+    internal_lb_vip_address: 10.100.100.3
+    keystone_galera_address: 10.100.100.2
     keystone_galera_database: keystone
     keystone_venv_tag: "testing"
     keystone_developer_mode: true
@@ -268,7 +268,7 @@
     keystone_rabbitmq_port: 5671
     keystone_rabbitmq_userid: keystone
     keystone_rabbitmq_vhost: /keystone
-    keystone_rabbitmq_servers: 10.100.100.101
+    keystone_rabbitmq_servers: 10.100.100.2
     keystone_rabbitmq_use_ssl: false
     galera_client_drop_config_file: false
 
@@ -300,16 +300,21 @@
         - groups['rabbitmq_all']|length > 0
   roles:
     - role: "{{ rolename | basename }}"
+  tasks:
+    # needed by the functional test playbook below
+    - name: Install httplib2 so we can use the uri module
+      pip:
+        name: httplib2
   vars:
     is_metal: "{{ properties.is_metal|default(false) }}"
-    external_lb_vip_address: 10.100.100.102
-    internal_lb_vip_address: 10.100.100.102
-    rabbitmq_servers: 10.100.100.101
+    external_lb_vip_address: 10.100.100.3
+    internal_lb_vip_address: 10.100.100.3
+    rabbitmq_servers: 10.100.100.2
     rabbitmq_use_ssl: true
     rabbitmq_port: 5671
     memcached_servers: 127.0.0.1
     memcached_encryption_key: "secrete"
-    ceilometer_db_ip: 10.100.100.101
+    ceilometer_db_ip: 10.100.100.2
     keystone_admin_user_name: admin
     keystone_admin_tenant_name: admin
     keystone_auth_admin_password: "SuperSecretePassword"
@@ -338,4 +343,21 @@
     ceilometer_container_db_password: secrete
     openrc_os_password: "{{ keystone_auth_admin_password }}"
     openrc_os_domain_name: "Default"
+
+- name: Playbook for functional testing ceilometer
+  hosts: ceilometer_api
+  user: root
+  gather_facts: false
+  tasks:
+    - name: Check the ceilometer-api
+      uri:
+        url: "http://localhost:8777"
+        status_code: 401
+      register: result
+      until:
+        - result is defined
+        - result.status is defined
+        - result.status == 401
+      retries: 5
+      delay: 10
 
