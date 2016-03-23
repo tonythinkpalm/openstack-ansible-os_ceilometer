@@ -5,7 +5,7 @@
 
 # Remove authtoken from the pipeline if you don't want to use keystone authentication
 [pipeline:main]
-pipeline = request_id authtoken api-server
+pipeline = cors request_id authtoken api-server
 
 [app:api-server]
 paste.app_factory = ceilometer.api.app:app_factory
@@ -15,3 +15,7 @@ paste.filter_factory = keystonemiddleware.auth_token:filter_factory
 
 [filter:request_id]
 paste.filter_factory = oslo_middleware:RequestId.factory
+
+[filter:cors]
+paste.filter_factory = oslo_middleware.cors:filter_factory
+oslo_config_project = ceilometer
