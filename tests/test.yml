@@ -259,7 +259,7 @@
     keystone_venv_tag: "testing"
     keystone_developer_mode: true
     keystone_git_install_branch: stable/mitaka
-    keystone_requirements_git_install_branch: f8cf7eba898a1424549c730d6692ec4e9573c0ed # HEAD of "master" as of 23.03.2016
+    keystone_requirements_git_install_branch: stable/mitaka
     keystone_auth_admin_token: "SuperSecreteTestToken"
     keystone_auth_admin_password: "SuperSecretePassword"
     keystone_service_password: "secrete"
@@ -337,7 +337,7 @@
     ceilometer_venv_tag: "testing"
     ceilometer_developer_mode: true
     ceilometer_git_install_branch: stable/mitaka
-    ceilometer_requirements_git_install_branch: f8cf7eba898a1424549c730d6692ec4e9573c0ed # HEAD of "master" as of 23.03.2016
+    ceilometer_requirements_git_install_branch: stable/mitaka
     ceilometer_service_password: secrete
     ceilometer_telemetry_secret: secrete
     ceilometer_container_db_password: secrete
