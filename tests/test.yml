@@ -258,8 +258,8 @@
     keystone_galera_database: keystone
     keystone_venv_tag: "testing"
     keystone_developer_mode: true
-    keystone_git_install_branch: stable/mitaka
-    keystone_requirements_git_install_branch: stable/mitaka
+    keystone_git_install_branch: master
+    keystone_requirements_git_install_branch: master
     keystone_auth_admin_token: "SuperSecreteTestToken"
     keystone_auth_admin_password: "SuperSecretePassword"
     keystone_service_password: "secrete"
@@ -336,8 +336,8 @@
     ceilometer_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
     ceilometer_venv_tag: "testing"
     ceilometer_developer_mode: true
-    ceilometer_git_install_branch: stable/mitaka
-    ceilometer_requirements_git_install_branch: stable/mitaka
+    ceilometer_git_install_branch: master
+    ceilometer_requirements_git_install_branch: master
     ceilometer_service_password: secrete
     ceilometer_telemetry_secret: secrete
     ceilometer_container_db_password: secrete

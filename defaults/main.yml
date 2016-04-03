@@ -21,9 +21,9 @@ verbose: True
 cache_timeout: 600
 
 ceilometer_git_repo: https://git.openstack.org/openstack/ceilometer
-ceilometer_git_install_branch: stable/mitaka
+ceilometer_git_install_branch: master
 ceilometer_requirements_git_repo: https://git.openstack.org/openstack/requirements
-ceilometer_requirements_git_install_branch: stable/mitaka
+ceilometer_requirements_git_install_branch: master
 ceilometer_developer_mode: false
 ceilometer_developer_constraints:
   - "git+{{ ceilometer_git_repo }}@{{ ceilometer_git_install_branch }}#egg=ceilometer"
