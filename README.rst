@@ -1,13 +1,24 @@
-OpenStack ceilometer
+OpenStack Ceilometer
 ####################
-:tags: openstack, ceilometer, cloud, ansible
-:category: \*nix
 
-Role to install ceilometer and ceilometer registry.
+Ansible Role that installs and configures OpenStack Ceilometer.
 
 This role will install the following:
     * ceilometer-api
     * ceilometer-registry
+
+The role will configure Ceilometer to use MongoDB for data storage, but does
+not install or configure MongoDB.
+
+Default Variables
+=================
+
+.. literalinclude:: ../../defaults/main.yml
+   :language: yaml
+   :start-after: under the License.
+
+Example Playbook
+================
 
 .. code-block:: yaml
 
