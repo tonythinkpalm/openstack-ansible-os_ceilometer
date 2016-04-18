@@ -148,6 +148,11 @@ ceilometer_service_names:
   - "ceilometer-agent-notification"
   - "ceilometer-polling"
 
+ceilometer_required_secrets:
+  - memcached_encryption_key
+  - ceilometer_telemetry_secret
+  - ceilometer_rabbitmq_password
+  - ceilometer_service_password
 
 ## Tunable overrides
 ceilometer_policy_overrides: {}
