@@ -17,9 +17,6 @@
 debug: False
 verbose: True
 
-## APT Cache options
-cache_timeout: 600
-
 ceilometer_git_repo: https://git.openstack.org/openstack/ceilometer
 ceilometer_git_install_branch: master
 ceilometer_requirements_git_repo: https://git.openstack.org/openstack/requirements
@@ -110,16 +107,6 @@ keystone_ceilometer_enabled: false
 
 ## Keystone authentication middleware
 ceilometer_keystone_auth_plugin: password
-
-# Common apt packages
-ceilometer_apt_packages:
-  - rpcbind
-  - rsync
-  - git
-
-# Packages required in developer mode, where packages are built locally
-ceilometer_developer_mode_apt_packages:
-  - libvirt-dev
 
 # ceilometer packages that must be installed before anything else
 ceilometer_requires_pip_packages:
