@@ -18,7 +18,7 @@ galaxy_info:
   description: Installation and setup of ceilometer
   company: Rackspace
   license: Apache2
-  min_ansible_version: 1.6.6
+  min_ansible_version: 1.9
   platforms:
     - name: Ubuntu
       versions:
@@ -30,11 +30,6 @@ galaxy_info:
     - development
     - openstack
 dependencies:
-  - role: pip_lock_down
-    when:
-      - not ceilometer_developer_mode | bool
-  - role: pip_install
-    when:
-      - ceilometer_developer_mode | bool
+  - pip_install
   - apt_package_pinning
   - openstack_openrc
