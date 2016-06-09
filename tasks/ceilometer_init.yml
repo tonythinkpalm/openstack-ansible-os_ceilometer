@@ -1,5 +1,5 @@
 ---
-# Copyright 2014, Rackspace US, Inc.
+# Copyright 2016, Rackspace US, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: ceilometer_upstart_common_init.yml
+- include: ceilometer_init_common.yml
   vars:
     program_name: "{{ ceilometer_api_program_name }}"
     service_name: "{{ ceilometer_service_name }}"
@@ -22,7 +22,7 @@
     service_home: "{{ ceilometer_system_user_home }}"
   when: inventory_hostname in groups['ceilometer_api']
 
-- include: ceilometer_upstart_common_init.yml
+- include: ceilometer_init_common.yml
   vars:
     program_name: "{{ ceilometer_agent_notification_program_name }}"
     service_name: "{{ ceilometer_service_name }}"
@@ -31,7 +31,7 @@
     service_home: "{{ ceilometer_system_user_home }}"
   when: inventory_hostname in groups['ceilometer_agent_notification']
 
-- include: ceilometer_upstart_common_init.yml
+- include: ceilometer_init_common.yml
   vars:
     program_name: "{{ ceilometer_collector_program_name }}"
     service_name: "{{ ceilometer_service_name }}"
@@ -40,7 +40,7 @@
     service_home: "{{ ceilometer_system_user_home }}"
   when: inventory_hostname in groups['ceilometer_collector']
 
-- include: ceilometer_upstart_common_init.yml
+- include: ceilometer_init_common.yml
   vars:
     program_name: "{{ ceilometer_polling_program_name }}"
     service_name: "{{ ceilometer_service_name }}"
@@ -50,7 +50,7 @@
     program_config_options: "--polling-namespaces central"
   when: inventory_hostname in groups['ceilometer_agent_central']
 
-- include: ceilometer_upstart_common_init.yml
+- include: ceilometer_init_common.yml
   vars:
     program_name: "{{ ceilometer_polling_program_name }}"
     service_name: "{{ ceilometer_service_name }}"
