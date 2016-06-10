@@ -16,8 +16,6 @@
 - include: install-apt.yml
   when:
     - ansible_pkg_mgr == 'apt'
-  tags:
-    - install-apt
 
 - name: Create developer mode constraint file
   copy:
@@ -28,9 +26,6 @@
       {% endfor %}
   when:
     - ceilometer_developer_mode | bool
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Clone requirements git repository
   git:
@@ -41,27 +36,18 @@
     version: "{{ ceilometer_requirements_git_install_branch }}"
   when:
     - ceilometer_developer_mode | bool
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Add constraints to pip_install_options fact for developer mode
   set_fact:
     pip_install_options_fact: "{{ pip_install_options|default('') }} --constraint /opt/developer-pip-constraints.txt --constraint /opt/requirements/upper-constraints.txt"
   when:
     - ceilometer_developer_mode | bool
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Set pip_install_options_fact when not in developer mode
   set_fact:
     pip_install_options_fact: "{{ pip_install_options|default('') }}"
   when:
     - not ceilometer_developer_mode | bool
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Install requires pip packages
   pip:
@@ -73,9 +59,6 @@
   retries: 5
   delay: 2
   with_items: ceilometer_requires_pip_packages
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Get local venv checksum
   stat:
@@ -85,9 +68,6 @@
     - not ceilometer_developer_mode | bool
     - ceilometer_venv_enabled | bool
   register: local_venv_stat
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Get remote venv checksum
   uri:
@@ -97,9 +77,6 @@
     - not ceilometer_developer_mode | bool
     - ceilometer_venv_enabled | bool
   register: remote_venv_checksum
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 # TODO: When project moves to ansible 2 we can pass this a sha256sum which will:
 #       a) allow us to remove force: yes
@@ -118,17 +95,11 @@
     - ceilometer_venv_enabled | bool
     - (local_venv_stat.stat.exists == False or
         {{ local_venv_stat.stat.checksum is defined and local_venv_stat.stat.checksum != remote_venv_checksum.content | trim }})
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Set ceilometer get_venv fact
   set_fact:
     ceilometer_get_venv: "{{ get_venv }}"
   when: ceilometer_venv_enabled | bool
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Remove existing venv
   file:
@@ -138,9 +109,6 @@
     - not ceilometer_developer_mode | bool
     - ceilometer_venv_enabled | bool
     - ceilometer_get_venv | changed
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Create ceilometer venv dir
   file:
@@ -150,9 +118,6 @@
     - not ceilometer_developer_mode | bool
     - ceilometer_venv_enabled | bool
     - ceilometer_get_venv | changed
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Unarchive pre-built venv
   unarchive:
@@ -164,9 +129,6 @@
     - ceilometer_venv_enabled | bool
     - ceilometer_get_venv | changed
   notify: Restart ceilometer services
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Update virtualenv path
   command: >
@@ -175,9 +137,6 @@
     - not ceilometer_developer_mode | bool
     - ceilometer_venv_enabled | bool
     - ceilometer_get_venv | success
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Install pip packages (venv)
   pip:
@@ -196,9 +155,6 @@
     - ceilometer_get_venv | failed or ceilometer_developer_mode | bool
 
   notify: Restart ceilometer services
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages
 
 - name: Install pip packages (no venv)
   pip:
@@ -214,6 +170,3 @@
     - not ceilometer_developer_mode | bool
     - not ceilometer_venv_enabled | bool
   notify: Restart ceilometer services
-  tags:
-    - ceilometer-install
-    - ceilometer-pip-packages

@@ -18,8 +18,6 @@
     name: "{{ ceilometer_system_group_name }}"
     state: "present"
     system: "yes"
-  tags:
-    - ceilometer-group
 
 - name: Create the ceilometer system user
   user:
@@ -30,8 +28,6 @@
     system: "yes"
     createhome: "yes"
     home: "{{ ceilometer_system_user_home }}"
-  tags:
-    - ceilometer-user
 
 - name: Create the swift system user and add to ceilometer group
   user:
@@ -42,9 +38,6 @@
     system: "yes"
     createhome: "yes"
     home: "{{ swift_system_home_folder }}"
-  tags:
-    - ceilometer-swift-user
-    - ceilometer-pre-install
 
 - name: Create ceilometer dir
   file:
@@ -60,8 +53,6 @@
     - { path: "{{ ceilometer_system_user_home }}" }
     - { path: "{{ ceilometer_system_user_home }}/.ssh", mode: "0700" }
     - { path: "/var/cache/ceilometer", mode: "0700" }
-  tags:
-    - ceilometer-dirs
 
 - name: Create ceilometer venv dir
   file:
@@ -71,8 +62,6 @@
     - { path: "/openstack/venvs" }
     - { path: "{{ ceilometer_venv_bin }}" }
   when: ceilometer_venv_enabled | bool
-  tags:
-    - ceilometer-dirs
 
 - name: Test for log directory or link
   shell: |
@@ -85,9 +74,6 @@
   register: log_dir
   failed_when: false
   changed_when: log_dir.rc != 0
-  tags:
-    - ceilometer-dirs
-    - ceilometer-logs
 
 - name: Create ceilometer log dir
   file:
@@ -99,6 +85,3 @@
   with_items:
     - { path: "/var/log/ceilometer" }
   when: log_dir.rc != 0
-  tags:
-    - ceilometer-dirs
-    - ceilometer-logs

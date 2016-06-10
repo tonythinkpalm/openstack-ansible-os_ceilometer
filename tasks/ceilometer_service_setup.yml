@@ -28,9 +28,6 @@
   until: add_service|success
   retries: 5
   delay: 2
-  tags:
-    - ceilometer-setup
-    - ceilometer-service-add
 
 - name: Ensure ceilometer user
   keystone:
@@ -49,9 +46,6 @@
   until: add_service|success
   retries: 5
   delay: 10
-  tags:
-    - ceilometer-setup
-    - ceilometer-service-add
 
 - name: Ensure ceilometer user to admin role
   keystone:
@@ -69,11 +63,6 @@
   until: add_admin_role|success
   retries: 5
   delay: 10
-  tags:
-    - ceilometer-api-setup
-    - ceilometer-service-add
-    - ceilometer-setup
-
 
 # Create an endpoint
 - name: Ensure ceilometer endpoint
@@ -98,6 +87,3 @@
   until: add_service|success
   retries: 5
   delay: 10
-  tags:
-    - ceilometer-setup
-    - ceilometer-service-add

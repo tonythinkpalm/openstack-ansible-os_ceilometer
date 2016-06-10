@@ -66,9 +66,6 @@
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
   notify: Restart ceilometer services
-  tags:
-    - ceilometer-config
-    - ceilometer-post-install
 
 - name: Drop rootwrap filters
   copy:
@@ -78,21 +75,15 @@
     group: "root"
   notify:
     - Restart ceilometer services
-  tags:
-    - ceilometer-config
 
 - name: Get ceilometer command path
   command: which ceilometer
   register: ceilometer_command_path
   when:
     - not ceilometer_venv_enabled | bool
-  tags:
-    - ceilometer-command-bin
 
 - name: Set ceilometer command path
   set_fact:
     ceilometer_bin: "{{ ceilometer_command_path.stdout | dirname }}"
   when:
     - not ceilometer_venv_enabled | bool
-  tags:
-    - ceilometer-command-bin
