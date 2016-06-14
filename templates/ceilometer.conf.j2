@@ -10,6 +10,11 @@ notification_topics = notifications
 rpc_backend = rabbit
 aodh_is_enabled = {{ ceilometer_aodh_enabled | bool }}
 
+{% if ceilometer_gnocchi_enabled | bool %}
+event_dispatchers =
+meter_dispatchers = gnocchi
+{% endif %}
+
 [oslo_policy]
 policy_file = /etc/ceilometer/policy.json
 
@@ -23,15 +28,20 @@ rabbit_hosts = {{ rabbitmq_servers }}
 rabbit_use_ssl = {{ rabbitmq_use_ssl }}
 
 [api]
+gnocchi_is_enabled = {{ ceilometer_gnocchi_enabled | bool }}
 workers = {{ ceilometer_api_workers | default(workers) }}
 port = 8777
 
 [collector]
 workers = {{ ceilometer_collector_workers | default(workers) }}
+{% if ceilometer_gnocchi_enabled | bool %}
+batch_size = 10
+batch_timeout = 5
+{% endif %}
 
 [notification]
 workers = {{ ceilometer_notification_workers | default(workers) }}
-store_events = True
+store_events = {{ not ceilometer_gnocchi_enabled | bool }}
 # Configuring the notification queue listeners
 # Ceilometer needs to connect to it's own rabbitmq vhost
 {% for host in groups['rabbitmq_all'] %}
@@ -73,11 +83,19 @@ messaging_urls = rabbit://{{ heat_rabbitmq_userid }}:{{ heat_rabbitmq_password }
 messaging_urls = rabbit://{{ keystone_rabbitmq_userid }}:{{ keystone_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ rabbitmq_port }}/{{ keystone_rabbitmq_vhost }}
 {% endfor %}
 {% endif %}
-# TODO: Swift
+# TODO(alextricity25): Swift
 
 [database]
 metering_connection = {{ ceilometer_connection_string }}
 event_connection = {{ ceilometer_connection_string }}
+
+{% if ceilometer_gnocchi_enabled | bool %}
+[dispatcher_gnocchi]
+archive_policy = low
+
+[storage]
+max_retries = 80
+{% endif %}
 
 [keystone_authtoken]
 insecure = {{ keystone_service_internaluri_insecure | bool }}

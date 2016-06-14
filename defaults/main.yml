@@ -104,9 +104,10 @@ neutron_ceilometer_enabled: false
 heat_ceilometer_enabled: false
 keystone_ceilometer_enabled: false
 
+# Enable/Disable Telemetry partner services in Ceilometer
 # Defaults to True if the service is deployed.
 ceilometer_aodh_enabled: false
-
+ceilometer_gnocchi_enabled: false
 
 ## Keystone authentication middleware
 ceilometer_keystone_auth_plugin: password
@@ -130,6 +131,7 @@ ceilometer_pip_packages:
   - pymongo
   - tooz
   - libvirt-python
+  - gnocchiclient
 
 ## Service Names
 ceilometer_service_names:
