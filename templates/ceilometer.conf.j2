@@ -8,6 +8,7 @@ debug = {{ debug }}
 auth_strategy = keystone
 notification_topics = notifications
 rpc_backend = rabbit
+aodh_is_enabled = {{ ceilometer_aodh_enabled | bool }}
 
 [oslo_policy]
 policy_file = /etc/ceilometer/policy.json
@@ -77,9 +78,6 @@ messaging_urls = rabbit://{{ keystone_rabbitmq_userid }}:{{ keystone_rabbitmq_pa
 [database]
 metering_connection = {{ ceilometer_connection_string }}
 event_connection = {{ ceilometer_connection_string }}
-{% if groups['aodh_all'] is defined and groups['aodh_all'] | length > 0 %}
-alarm_connection = {{ aodh_connection_string }}
-{% endif %}
 
 [keystone_authtoken]
 insecure = {{ keystone_service_internaluri_insecure | bool }}
