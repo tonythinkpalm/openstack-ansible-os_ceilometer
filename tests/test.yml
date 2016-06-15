@@ -131,7 +131,7 @@
       apt:
         name: "{{ item }}"
         state: present
-      with_items: packages_mongodb
+      with_items: "{{ packages_mongodb }}"
     - name: Configure the MongoDB bind address
       lineinfile:
         dest: /etc/mongodb.conf
