@@ -104,6 +104,10 @@ neutron_ceilometer_enabled: false
 heat_ceilometer_enabled: false
 keystone_ceilometer_enabled: false
 
+# Defaults to True if the service is deployed.
+ceilometer_aodh_enabled: false
+
+
 ## Keystone authentication middleware
 ceilometer_keystone_auth_plugin: password
 
