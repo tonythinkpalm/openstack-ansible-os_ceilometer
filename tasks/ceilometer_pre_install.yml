@@ -54,15 +54,6 @@
     - { path: "{{ ceilometer_system_user_home }}/.ssh", mode: "0700" }
     - { path: "/var/cache/ceilometer", mode: "0700" }
 
-- name: Create ceilometer venv dir
-  file:
-    path: "{{ item.path }}"
-    state: directory
-  with_items:
-    - { path: "/openstack/venvs" }
-    - { path: "{{ ceilometer_venv_bin }}" }
-  when: ceilometer_venv_enabled | bool
-
 - name: Test for log directory or link
   shell: |
     if [ -h "/var/log/ceilometer"  ]; then
