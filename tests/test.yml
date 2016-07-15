@@ -305,8 +305,6 @@
     ceilometer_rabbitmq_password: secrete
     ceilometer_rabbitmq_vhost: /ceilometer
     ceilometer_rabbitmq_servers: "{{ rabbitmq_servers }}"
-    ceilometer_rabbitmq_port: "{{ rabbitmq_port }}"
-    ceilometer_rabbitmq_use_ssl: "{{ rabbitmq_use_ssl }}"
     ceilometer_venv_tag: "testing"
     ceilometer_developer_mode: true
     ceilometer_git_install_branch: master

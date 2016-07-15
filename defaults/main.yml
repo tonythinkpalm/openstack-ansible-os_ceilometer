@@ -49,6 +49,12 @@ ceilometer_connection_string: "{{ ceilometer_db_type }}://{{ ceilometer_database
 ## RabbitMQ info
 ceilometer_rabbitmq_userid: ceilometer
 ceilometer_rabbitmq_vhost: /ceilometer
+ceilometer_rabbitmq_port: 5672
+ceilometer_rabbitmq_use_ssl: False
+# Comma separated list of hosts
+ceilometer_rabbitmq_servers: 127.0.0.1
+# Inventory group containing the hosts for the cluster
+ceilometer_rabbitmq_host_group: "rabbitmq_all"
 
 
 #Ceilometer services info
