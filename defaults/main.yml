@@ -49,17 +49,17 @@ ceilometer_db_ip: localhost
 ceilometer_db_port: 27017
 ceilometer_connection_string: "{{ ceilometer_db_type }}://{{ ceilometer_database_user }}:{{ ceilometer_container_db_password }}@{{ ceilometer_db_ip }}:{{ ceilometer_db_port }}/{{ ceilometer_database_name }}"
 
-
 ## RabbitMQ info
+
+## Configuration for RPC communications
 ceilometer_rabbitmq_userid: ceilometer
 ceilometer_rabbitmq_vhost: /ceilometer
 ceilometer_rabbitmq_port: 5672
-ceilometer_rabbitmq_use_ssl: False
 # Comma separated list of hosts
 ceilometer_rabbitmq_servers: 127.0.0.1
+ceilometer_rabbitmq_use_ssl: False
 # Inventory group containing the hosts for the cluster
 ceilometer_rabbitmq_host_group: "rabbitmq_all"
-
 
 #Ceilometer services info
 ceilometer_role_name: admin

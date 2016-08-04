@@ -238,7 +238,7 @@
     keystone_service_password: "secrete"
     keystone_rabbitmq_password: "secrete"
     keystone_container_mysql_password: "SuperSecrete"
-    keystone_rabbitmq_port: 5671
+    keystone_rabbitmq_port: 5672
     keystone_rabbitmq_userid: keystone
     keystone_rabbitmq_vhost: /keystone
     keystone_rabbitmq_servers: 10.100.100.2
@@ -283,8 +283,8 @@
     external_lb_vip_address: 10.100.100.3
     internal_lb_vip_address: 10.100.100.3
     rabbitmq_servers: 10.100.100.2
-    rabbitmq_use_ssl: true
-    rabbitmq_port: 5671
+    rabbitmq_use_ssl: False
+    rabbitmq_port: 5672
     memcached_servers: 127.0.0.1
     memcached_encryption_key: "secrete"
     ceilometer_db_ip: 10.100.100.2

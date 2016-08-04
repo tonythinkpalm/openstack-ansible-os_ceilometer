@@ -6,9 +6,10 @@
 [DEFAULT]
 debug = {{ debug }}
 auth_strategy = keystone
-notification_topics = notifications
-rpc_backend = rabbit
 aodh_is_enabled = {{ ceilometer_aodh_enabled | bool }}
+
+# RPC
+transport_url = rabbit://{% for host in ceilometer_rabbitmq_servers.split(',') %}{{ ceilometer_rabbitmq_userid }}:{{ ceilometer_rabbitmq_password }}@{{ host }}:{{ ceilometer_rabbitmq_port }}{% if not loop.last %},{% else %}/{{ ceilometer_rabbitmq_vhost }}{% endif %}{% endfor %}
 
 {% if ceilometer_gnocchi_enabled | bool %}
 event_dispatchers =
@@ -19,12 +20,6 @@ meter_dispatchers = gnocchi
 policy_file = /etc/ceilometer/policy.json
 
 [oslo_messaging_rabbit]
-rpc_backend = rabbit
-rabbit_port = {{ ceilometer_rabbitmq_port }}
-rabbit_userid = {{ ceilometer_rabbitmq_userid }}
-rabbit_password = {{ ceilometer_rabbitmq_password }}
-rabbit_virtual_host = {{ ceilometer_rabbitmq_vhost }}
-rabbit_hosts = {{ ceilometer_rabbitmq_servers }}
 rabbit_use_ssl = {{ ceilometer_rabbitmq_use_ssl }}
 
 [api]
@@ -42,48 +37,55 @@ batch_timeout = 5
 [notification]
 workers = {{ ceilometer_notification_workers | default(workers) }}
 store_events = {{ not ceilometer_gnocchi_enabled | bool }}
-# Configuring the notification queue listeners
+
+# Notification queues to listen on
+
 # Ceilometer needs to connect to it's own rabbitmq vhost
 {% for host in groups[ceilometer_rabbitmq_host_group] %}
 messaging_urls = rabbit://{{ ceilometer_rabbitmq_userid }}:{{ ceilometer_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ ceilometer_rabbitmq_port }}/{{ ceilometer_rabbitmq_vhost }}
 {% endfor %}
+
 {% if glance_ceilometer_enabled %}
-# Glance
-{% for host in groups[glance_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ glance_rabbitmq_userid }}:{{ glance_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ glance_rabbitmq_port }}/{{ glance_rabbitmq_vhost }}
+# Glance notifications
+{% for host in groups[glance_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ glance_rabbitmq_telemetry_userid }}:{{ glance_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ glance_rabbitmq_telemetry_port }}/{{ glance_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
+
 {% if nova_ceilometer_enabled %}
-# Nova
-{% for host in groups[nova_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ nova_rabbitmq_userid }}:{{ nova_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ nova_rabbitmq_port }}/{{ nova_rabbitmq_vhost }}
+# Nova notifications
+{% for host in groups[nova_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ nova_rabbitmq_telemetry_userid }}:{{ nova_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ nova_rabbitmq_telemetry_port }}/{{ nova_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
+
 {% if cinder_ceilometer_enabled %}
-# Cinder
-{% for host in groups[cinder_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ cinder_rabbitmq_userid }}:{{ cinder_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ cinder_rabbitmq_port }}/{{ cinder_rabbitmq_vhost }}
+# Cinder notifications
+{% for host in groups[cinder_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ cinder_rabbitmq_telemetry_userid }}:{{ cinder_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ cinder_rabbitmq_telemetry_port }}/{{ cinder_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
+
 {% if neutron_ceilometer_enabled %}
-# Neutron
-{% for host in groups[neutron_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ neutron_rabbitmq_userid }}:{{ neutron_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ neutron_rabbitmq_port }}/{{ neutron_rabbitmq_vhost }}
+# Neutron notifications
+{% for host in groups[neutron_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ neutron_rabbitmq_telemetry_userid }}:{{ neutron_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ neutron_rabbitmq_telemetry_port }}/{{ neutron_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
+
 {% if heat_ceilometer_enabled %}
-# Heat
-{% for host in groups[heat_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ heat_rabbitmq_userid }}:{{ heat_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ heat_rabbitmq_port }}/{{ heat_rabbitmq_vhost }}
+# Heat notifications
+{% for host in groups[heat_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ heat_rabbitmq_telemetry_userid }}:{{ heat_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ heat_rabbitmq_telemetry_port }}/{{ heat_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
+
 {% if keystone_ceilometer_enabled %}
-# Keystone
-{% for host in groups[keystone_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ keystone_rabbitmq_userid }}:{{ keystone_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ keystone_rabbitmq_port }}/{{ keystone_rabbitmq_vhost }}
+# Keystone notifications
+{% for host in groups[keystone_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ keystone_rabbitmq_telemetry_userid }}:{{ keystone_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ keystone_rabbitmq_telemetry_port }}/{{ keystone_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
-# TODO(alextricity25): Swift
 
 [database]
 metering_connection = {{ ceilometer_connection_string }}
