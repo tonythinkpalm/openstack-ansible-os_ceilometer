@@ -4,6 +4,8 @@
 {% set workers = _workers if _workers > 0 else 1 %}
 
 [DEFAULT]
+# Disable stderr logging
+use_stderr = False
 debug = {{ debug }}
 auth_strategy = keystone
 aodh_is_enabled = {{ ceilometer_aodh_enabled | bool }}
