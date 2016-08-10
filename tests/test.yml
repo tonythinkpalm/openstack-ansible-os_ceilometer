@@ -13,21 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: test-prepare-keys.yml
+# Setup the host
+- include: playbooks/test-setup-host.yml
 
-- include: test-prepare-host.yml
+# Install RabbitMQ/MariaDB
+- include: playbooks/test-install-infra.yml
 
-- include: test-prepare-containers.yml
-
-- include: test-install-infra.yml
-
-- include: test-install-keystone.yml
+# Install Keystone
+- include: playbooks/test-install-keystone.yml
 
 # Needed in order to run Ceilometer Tempest test
-- include: test-install-glance.yml
+- include: playbooks/test-install-glance.yml
+
+# Ceilometer metric data backend
+- include: test-install-mongodb.yml
 
 - include: test-install-ceilometer.yml
 
-- include: test-install-tempest.yml
+- include: playbooks/test-install-tempest.yml
 
 - include: test-functional-ceilometer.yml
