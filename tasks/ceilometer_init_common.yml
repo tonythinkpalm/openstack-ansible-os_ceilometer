@@ -15,13 +15,9 @@
 
 - include: ceilometer_init_upstart.yml
   when: pid1_name == "init"
-  tags:
-    - ceilometer-init
 
 - include: ceilometer_init_systemd.yml
   when: pid1_name == "systemd"
-  tags:
-    - ceilometer-init
 
 - name: Load service
   service:
