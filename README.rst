@@ -37,9 +37,8 @@ Example Playbook
 Tags
 ====
 
-This role supports two tags: ``ceilometer-install`` and ``ceilometer-config``
+This role supports two tags: ``ceilometer-install`` and ``ceilometer-config``.
 
 The ``ceilometer-install`` tag can be used to install and upgrade.
 
-The ``ceilometer-config`` tag can be used to maintain configuration of the
-service.
+The ``ceilometer-config`` tag can be used to maintain configuration of the service.
