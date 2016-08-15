@@ -20,11 +20,18 @@ debug: False
 # Options are 'present' and 'latest'
 ceilometer_package_state: "latest"
 
+## Toggle developer mode
+ceilometer_developer_mode: false
+
+## The git source/branch
 ceilometer_git_repo: https://git.openstack.org/openstack/ceilometer
 ceilometer_git_install_branch: master
+
+## The git source/branch for the upper-constraints (used in developer mode)
 ceilometer_requirements_git_repo: https://git.openstack.org/openstack/requirements
 ceilometer_requirements_git_install_branch: master
-ceilometer_developer_mode: false
+
+## The packages to build from source (used in developer mode)
 ceilometer_developer_constraints:
   - "git+{{ ceilometer_git_repo }}@{{ ceilometer_git_install_branch }}#egg=ceilometer"
 
@@ -32,6 +39,7 @@ ceilometer_developer_constraints:
 ceilometer_venv_tag: untagged
 ceilometer_bin: "/openstack/venvs/ceilometer-{{ ceilometer_venv_tag }}/bin"
 
+# URL of the pre-built virtualenv
 ceilometer_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/ceilometer.tgz
 
 ## System info
