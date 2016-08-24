@@ -1,0 +1,148 @@
+---
+# Copyright 2015, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+internal_lb_vip_address: 10.100.100.2
+external_lb_vip_address: 10.100.100.2
+
+galera_client_drop_config_file: false
+galera_root_password: "secrete"
+galera_root_user: "root"
+
+# Glance specific settings
+glance_service_publicuri: "http://{{ hostvars[groups['glance_all'][0]]['ansible_ssh_host'] }}:9292"
+glance_service_publicurl: "{{ glance_service_publicuri }}"
+glance_service_internaluri: "http://{{ hostvars[groups['glance_all'][0]]['ansible_ssh_host'] }}:9292"
+glance_service_internalurl: "{{ glance_service_internaluri }}"
+glance_service_adminuri: "http://{{ hostvars[groups['glance_all'][0]]['ansible_ssh_host'] }}:9292"
+glance_service_adminurl: "{{ glance_service_adminuri }}"
+glance_container_mysql_password: "SuperSecrete"
+glance_developer_mode: true
+glance_galera_address: "{{ hostvars[groups['galera_all'][0]]['ansible_ssh_host'] }}"
+glance_galera_database: glance
+glance_git_install_branch: master
+glance_profiler_hmac_key: "secrete"
+glance_rabbitmq_password: "secrete"
+glance_rabbitmq_userid: glance
+glance_rabbitmq_vhost: /glance
+glance_rabbitmq_port: 5672
+glance_rabbitmq_host_group: rabbitmq_all
+glance_requirements_git_install_branch: master
+glance_service_password: "secrete"
+glance_venv_tag: "testing"
+glance_host: "{{ hostvars[groups['glance_all'][0]]['ansible_ssh_host'] }}"
+glance_service_port: 9292
+glance_ceilometer_enabled: True
+
+keystone_galera_address: 10.100.100.2
+keystone_galera_database: keystone
+keystone_venv_tag: "testing"
+keystone_developer_mode: true
+keystone_git_install_branch: master
+keystone_requirements_git_install_branch: master
+keystone_admin_user_name: admin
+keystone_admin_tenant_name: admin
+keystone_auth_admin_token: "SuperSecreteTestToken"
+keystone_auth_admin_password: "SuperSecretePassword"
+keystone_service_password: "secrete"
+keystone_rabbitmq_password: "secrete"
+keystone_container_mysql_password: "SuperSecrete"
+keystone_service_adminuri_insecure: false
+keystone_service_internaluri_insecure: false
+keystone_service_internaluri: "http://{{ internal_lb_vip_address }}:5000"
+keystone_service_internalurl: "{{ keystone_service_internaluri }}/v3"
+keystone_service_adminuri: "http://{{ internal_lb_vip_address }}:35357"
+keystone_service_adminurl: "{{ keystone_service_adminuri }}/v3"
+keystone_service_region: RegionOne
+keystone_rabbitmq_port: 5672
+keystone_rabbitmq_userid: keystone
+keystone_rabbitmq_vhost: /keystone
+keystone_rabbitmq_servers: 10.100.100.2
+keystone_rabbitmq_use_ssl: false
+
+rabbitmq_servers: 10.100.100.2
+rabbitmq_use_ssl: true
+rabbitmq_port: 5671
+
+memcached_servers: 127.0.0.1
+memcached_encryption_key: "secrete"
+
+ceilometer_db_ip: 10.100.100.2
+ceilometer_service_publicuri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_ssh_host'] }}:8777"
+ceilometer_service_publicurl: "{{ ceilometer_service_publicuri }}"
+ceilometer_service_internaluri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_ssh_host'] }}:8777"
+ceilometer_service_internalurl: "{{ ceilometer_service_internaluri }}"
+ceilometer_service_adminuri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_ssh_host'] }}:8777"
+ceilometer_service_adminurl: "{{ ceilometer_service_adminuri }}"
+ceilometer_rabbitmq_userid: ceilometer
+ceilometer_rabbitmq_password: secrete
+ceilometer_rabbitmq_vhost: /ceilometer
+ceilometer_rabbitmq_servers: "{{ rabbitmq_servers }}"
+ceilometer_venv_tag: "testing"
+ceilometer_developer_mode: true
+ceilometer_git_install_branch: master
+ceilometer_requirements_git_install_branch: master
+ceilometer_service_password: secrete
+ceilometer_telemetry_secret: secrete
+ceilometer_container_db_password: secrete
+
+swift_system_user_name: swift
+swift_system_shell: /bin/false
+swift_system_comment: swift test user
+swift_system_home_folder: "/var/lib/{{ swift_system_user_name }}"
+
+openrc_os_password: "{{ keystone_auth_admin_password }}"
+openrc_os_domain_name: "Default"
+openrc_os_auth_url: "http://{{ hostvars[groups['keystone_all'][0]]['ansible_ssh_host'] }}:5000/v3"
+
+tempest_developer_mode: True
+tempest_git_install_branch: master
+tempest_venv_tag: "{{ tempest_git_install_branch }}"
+# tempest_bin is the same as the default in os_tempest role, but we set
+# it again here so we can refer to it in test-aodh-functional.yml
+tempest_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
+tempest_log_dir: "/var/log/"
+tempest_main_group: ceilometer_all
+tempest_service_available_aodh: False
+tempest_service_available_ceilometer: True
+tempest_service_available_cinder: False
+tempest_service_available_glance: True
+tempest_service_available_heat: False
+tempest_service_available_horizon: False
+tempest_service_available_neutron: False
+tempest_service_available_nova: False
+tempest_service_available_swift: False
+
+tempest_pip_packages:
+  - tempest
+  - junitxml
+  - nose
+  - pyOpenSSL # added from the os_tempest role defaults to support tempest plugin deps
+  - python-ceilometerclient
+  - python-cinderclient
+  - python-glanceclient
+  - python-heatclient
+  - python-keystoneclient
+  - python-memcached
+  - python-neutronclient
+  - python-novaclient
+  - python-openstackclient
+  - python-saharaclient
+  - python-subunit
+  - python-swiftclient
+
+tempest_plugins:
+  - name: tempest-ceilometer
+    repo: https://git.openstack.org/openstack/ceilometer
+    branch: master

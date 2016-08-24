@@ -13,21 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: test-prepare-keys.yml
-
-- include: test-prepare-host.yml
-
-- include: test-prepare-containers.yml
-
-- include: test-install-infra.yml
-
-- include: test-install-keystone.yml
-
-# Needed in order to run Ceilometer Tempest test
-- include: test-install-glance.yml
-
-- include: test-install-ceilometer.yml
-
-- include: test-install-tempest.yml
-
-- include: test-functional-ceilometer.yml
+- name: Playbook for deploying tempest
+  hosts: openstack1
+  user: root
+  gather_facts: true
+  roles:
+    - role: "os_tempest"
+  vars_files:
+    - test-vars.yml
