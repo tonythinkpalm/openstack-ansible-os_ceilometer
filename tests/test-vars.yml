@@ -33,11 +33,21 @@ glance_galera_address: "{{ hostvars[groups['galera_all'][0]]['ansible_ssh_host']
 glance_galera_database: glance
 glance_git_install_branch: master
 glance_profiler_hmac_key: "secrete"
+# RPC
 glance_rabbitmq_password: "secrete"
 glance_rabbitmq_userid: glance
 glance_rabbitmq_vhost: /glance
 glance_rabbitmq_port: 5672
 glance_rabbitmq_host_group: rabbitmq_all
+# Telemetry notifications
+glance_rabbitmq_telemetry_userid: "{{ glance_rabbitmq_userid }}"
+glance_rabbitmq_telemetry_password: "{{ glance_rabbitmq_password }}"
+glance_rabbitmq_telemetry_vhost: "{{ glance_rabbitmq_vhost }}"
+glance_rabbitmq_telemetry_port: "{{ glance_rabbitmq_port }}"
+glance_rabbitmq_telemetry_servers: "{{ glance_rabbitmq_servers }}"
+glance_rabbitmq_telemetry_use_ssl: "{{ glance_rabbitmq_use_ssl }}"
+glance_rabbitmq_telemetry_host_group: "{{ glance_rabbitmq_host_group }}"
+
 glance_requirements_git_install_branch: master
 glance_service_password: "secrete"
 glance_venv_tag: "testing"
