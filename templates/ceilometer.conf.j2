@@ -89,6 +89,13 @@ messaging_urls = rabbit://{{ keystone_rabbitmq_telemetry_userid }}:{{ keystone_r
 {% endfor %}
 {% endif %}
 
+{% if sahara_ceilometer_enabled %}
+# Sahara notifications
+{% for host in groups[sahara_rabbitmq_telemetry_host_group] %}
+messaging_urls = rabbit://{{ sahara_rabbitmq_telemetry_userid }}:{{ sahara_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ sahara_rabbitmq_telemetry_port }}/{{ sahara_rabbitmq_telemetry_vhost }}
+{% endfor %}
+{% endif %}
+
 [database]
 metering_connection = {{ ceilometer_connection_string }}
 event_connection = {{ ceilometer_connection_string }}

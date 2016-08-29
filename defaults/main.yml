@@ -113,6 +113,7 @@ cinder_ceilometer_enabled: false
 neutron_ceilometer_enabled: false
 heat_ceilometer_enabled: false
 keystone_ceilometer_enabled: false
+sahara_ceilometer_enabled: false
 
 # Enable/Disable Telemetry partner services in Ceilometer
 # Defaults to True if the service is deployed.
