@@ -17,12 +17,12 @@
 cache_timeout: 600
 
 # Common apt packages
-ceilometer_apt_packages:
+ceilometer_distro_packages:
   - rpcbind
   - rsync
   - git
 
 # Packages required in developer mode, where packages are built locally
-ceilometer_developer_mode_apt_packages:
+ceilometer_developer_mode_distro_packages:
   - pkg-config
   - libvirt-dev
