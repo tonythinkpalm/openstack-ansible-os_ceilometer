@@ -54,6 +54,17 @@
     - { path: "{{ ceilometer_system_user_home }}/.ssh", mode: "0700" }
     - { path: "/var/cache/ceilometer", mode: "0700" }
 
+- name: Create Apache mod_wsgi dirs
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner|default(ceilometer_system_user_name) }}"
+    group: "{{ item.group|default(ceilometer_system_group_name) }}"
+    mode: "0755"
+  with_items:
+    - { path: "/var/www/cgi-bin", owner: root, group: root }
+    - { path: "/var/www/cgi-bin/ceilometer" }
+
 - name: Test for log directory or link
   shell: |
     if [ -h "/var/log/ceilometer"  ]; then

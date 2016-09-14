@@ -15,15 +15,6 @@
 
 - include: ceilometer_init_common.yml
   vars:
-    program_name: "{{ ceilometer_api_program_name }}"
-    service_name: "{{ ceilometer_service_name }}"
-    system_user: "{{ ceilometer_system_user_name }}"
-    system_group: "{{ ceilometer_system_group_name }}"
-    service_home: "{{ ceilometer_system_user_home }}"
-  when: inventory_hostname in groups['ceilometer_api']
-
-- include: ceilometer_init_common.yml
-  vars:
     program_name: "{{ ceilometer_agent_notification_program_name }}"
     service_name: "{{ ceilometer_service_name }}"
     system_user: "{{ ceilometer_system_user_name }}"
