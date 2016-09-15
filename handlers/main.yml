@@ -48,3 +48,5 @@
   until: apache_restart|success
   retries: 5
   delay: 2
+  when:
+    - inventory_hostname in groups['ceilometer_api']
