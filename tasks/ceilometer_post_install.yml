@@ -65,7 +65,19 @@
       dest: "/etc/ceilometer/policy.json"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
-  notify: Restart ceilometer services
+  notify:
+    - Restart ceilometer services
+    - Restart Apache
+
+- name: Drop ceilometer API WSGI Configs
+  template:
+    src: ceilometer-api-wsgi.py.j2
+    dest: /var/www/cgi-bin/ceilometer/ceilometer-api
+    owner: "{{ ceilometer_system_user_name }}"
+    group: "{{ ceilometer_system_group_name }}"
+    mode: "0755"
+  notify:
+    - Restart Apache
 
 - name: Drop rootwrap filters
   copy:
