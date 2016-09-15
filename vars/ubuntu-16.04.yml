@@ -21,13 +21,13 @@ ceilometer_distro_packages:
   - rpcbind
   - rsync
   - git
-  - apache2
-  - apache2-utils
-  - libapache2-mod-wsgi
-  - libffi-dev
-  - libssl-dev
 
 # Packages required in developer mode, where packages are built locally
 ceilometer_developer_mode_distro_packages:
   - pkg-config
   - libvirt-dev
+
+ceilometer_apache_distro_packages:
+  - apache2
+  - apache2-utils
+  - libapache2-mod-wsgi
