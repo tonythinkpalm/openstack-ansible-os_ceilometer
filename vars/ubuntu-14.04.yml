@@ -18,9 +18,9 @@ cache_timeout: 600
 
 # Common apt packages
 ceilometer_distro_packages:
+  - git
   - rpcbind
   - rsync
-  - git
 
 # Packages required in developer mode, where packages are built locally
 ceilometer_developer_mode_distro_packages:

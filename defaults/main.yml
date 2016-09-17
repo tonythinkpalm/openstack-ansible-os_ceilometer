@@ -132,25 +132,25 @@ ceilometer_keystone_auth_plugin: password
 
 # ceilometer packages that must be installed before anything else
 ceilometer_requires_pip_packages:
+  - httplib2
+  - python-keystoneclient # Keystoneclient needed to OSA keystone lib
   - virtualenv
   - virtualenv-tools
-  - python-keystoneclient # Keystoneclient needed to OSA keystone lib
-  - httplib2
 
 # Common pip packages
 ceilometer_pip_packages:
   - ceilometer
-  - python-ceilometerclient
   - ceilometermiddleware
-  - PyMySQL
-  - python-memcached
-  - pycrypto
-  - warlock
-  - pymongo
-  - tooz
-  - libvirt-python
   - gnocchiclient
+  - libvirt-python
   - oslo.db
+  - pycrypto
+  - PyMySQL
+  - pymongo
+  - python-ceilometerclient
+  - python-memcached
+  - tooz
+  - warlock
 
 ## Service Names
 ceilometer_service_names:
