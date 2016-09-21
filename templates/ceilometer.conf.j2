@@ -110,6 +110,10 @@ event_connection = {{ ceilometer_connection_string }}
 {% if ceilometer_gnocchi_enabled | bool %}
 [dispatcher_gnocchi]
 archive_policy = low
+{% if gnocchi_storage_driver is defined and gnocchi_storage_driver == 'swift' %}
+filter_service_activity = True
+filter_project = {{ gnocchi_service_project_name }}
+{% endif %}
 
 [storage]
 max_retries = 80
