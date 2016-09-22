@@ -44,48 +44,48 @@ store_events = {{ not ceilometer_gnocchi_enabled | bool }}
 
 # Ceilometer needs to connect to it's own rabbitmq vhost
 {% for host in groups[ceilometer_rabbitmq_host_group] %}
-messaging_urls = rabbit://{{ ceilometer_rabbitmq_userid }}:{{ ceilometer_rabbitmq_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ ceilometer_rabbitmq_port }}/{{ ceilometer_rabbitmq_vhost }}
+messaging_urls = rabbit://{{ ceilometer_rabbitmq_userid }}:{{ ceilometer_rabbitmq_password }}@{{ hostvars[host]['ansible_host'] }}:{{ ceilometer_rabbitmq_port }}/{{ ceilometer_rabbitmq_vhost }}
 {% endfor %}
 
 {% if glance_ceilometer_enabled %}
 # Glance notifications
 {% for host in groups[glance_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ glance_rabbitmq_telemetry_userid }}:{{ glance_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ glance_rabbitmq_telemetry_port }}/{{ glance_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ glance_rabbitmq_telemetry_userid }}:{{ glance_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ glance_rabbitmq_telemetry_port }}/{{ glance_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 
 {% if nova_ceilometer_enabled %}
 # Nova notifications
 {% for host in groups[nova_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ nova_rabbitmq_telemetry_userid }}:{{ nova_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ nova_rabbitmq_telemetry_port }}/{{ nova_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ nova_rabbitmq_telemetry_userid }}:{{ nova_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ nova_rabbitmq_telemetry_port }}/{{ nova_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 
 {% if cinder_ceilometer_enabled %}
 # Cinder notifications
 {% for host in groups[cinder_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ cinder_rabbitmq_telemetry_userid }}:{{ cinder_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ cinder_rabbitmq_telemetry_port }}/{{ cinder_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ cinder_rabbitmq_telemetry_userid }}:{{ cinder_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ cinder_rabbitmq_telemetry_port }}/{{ cinder_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 
 {% if neutron_ceilometer_enabled %}
 # Neutron notifications
 {% for host in groups[neutron_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ neutron_rabbitmq_telemetry_userid }}:{{ neutron_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ neutron_rabbitmq_telemetry_port }}/{{ neutron_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ neutron_rabbitmq_telemetry_userid }}:{{ neutron_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ neutron_rabbitmq_telemetry_port }}/{{ neutron_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 
 {% if heat_ceilometer_enabled %}
 # Heat notifications
 {% for host in groups[heat_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ heat_rabbitmq_telemetry_userid }}:{{ heat_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ heat_rabbitmq_telemetry_port }}/{{ heat_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ heat_rabbitmq_telemetry_userid }}:{{ heat_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ heat_rabbitmq_telemetry_port }}/{{ heat_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 
 {% if keystone_ceilometer_enabled %}
 # Keystone notifications
 {% for host in groups[keystone_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ keystone_rabbitmq_telemetry_userid }}:{{ keystone_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ keystone_rabbitmq_telemetry_port }}/{{ keystone_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ keystone_rabbitmq_telemetry_userid }}:{{ keystone_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ keystone_rabbitmq_telemetry_port }}/{{ keystone_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 
@@ -99,7 +99,7 @@ messaging_urls = rabbit://{{ swift_rabbitmq_telemetry_userid }}:{{ swift_rabbitm
 {% if sahara_ceilometer_enabled %}
 # Sahara notifications
 {% for host in groups[sahara_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ sahara_rabbitmq_telemetry_userid }}:{{ sahara_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ sahara_rabbitmq_telemetry_port }}/{{ sahara_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ sahara_rabbitmq_telemetry_userid }}:{{ sahara_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ sahara_rabbitmq_telemetry_port }}/{{ sahara_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 

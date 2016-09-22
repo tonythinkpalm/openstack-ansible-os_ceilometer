@@ -13,28 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Playbook for deploying infra services
-  hosts: service_all
+- name: Install MongoDB for ceilometer
+  hosts: mongo_all
   user: root
-  gather_facts: true
-  pre_tasks:
-    - name: Install MongoDB packages
+
+  tasks:
+    - name: Install mongo packages
       apt:
-        name: "{{ item }}"
         state: present
+        name: "{{ item }}"
       with_items: "{{ packages_mongodb }}"
+
     - name: Configure the MongoDB bind address
       lineinfile:
         dest: /etc/mongodb.conf
         regexp: "^(#)?bind_ip"
-        line: "bind_ip = 10.100.100.2"
+        line: "bind_ip = {{ ansible_host }}"
       register: mongodb_bind
+
     - name: Enable the MongoDB smallfiles option
       lineinfile:
         dest: /etc/mongodb.conf
         regexp: "^(#)?smallfiles"
         line: "smallfiles = true"
       register: mongodb_smallfiles
+
     - name: Restart mongodb
       service:
         name: mongodb
@@ -42,41 +45,45 @@
       when:
         - mongodb_bind | changed or mongodb_smallfiles | changed
       register: mongodb_restart
+
     - name: Wait for mongodb to come back online after the restart
       wait_for:
-        host: "10.100.100.2"
+        host: "{{ ansible_host }}"
         port: 27017
         delay: 5
         timeout: 30
       when:
         - mongodb_restart is defined
         - mongodb_restart | changed
+
     - name: Test mongodb connectivity
-      command: "mongo --host 10.100.100.2 --eval ' '"
+      command: "mongo --host {{ ansible_ssh_host }} --eval ' '"
       changed_when: False
+
+    - name: Add admin user
+      mongodb_user:
+        login_host: "{{ ansible_host }}"
+        database: admin
+        name: root
+        password: "{{ ceilometer_container_db_password }}"
+        roles: 'root'
+        state: present
+      ignore_errors: True
+
     - name: Add ceilometer database user
       mongodb_user:
-        login_host: "10.100.100.2"
-        database: ceilometer
-        name: ceilometer
-        password: secrete
+        login_host: "{{ ansible_host }}"
+        login_user: "root"
+        login_password: "{{ ceilometer_container_db_password }}"
+        database: "ceilometer"
+        name: "{{ ceilometer_database_user }}"
+        password: "{{ ceilometer_container_db_password }}"
         roles: 'readWrite,dbAdmin'
         state: present
-  roles:
-    - role: "rabbitmq_server"
-      rabbitmq_cookie_token: secrete
-    - role: "galera_server"
-      galera_root_password: secrete
-      galera_root_user: root
-      galera_innodb_buffer_pool_size: 512M
-      galera_innodb_log_buffer_size: 32M
-      galera_server_id: "{{ inventory_hostname | string_2_int }}"
-      galera_wsrep_node_name: "{{ inventory_hostname }}"
-      galera_wsrep_provider_options:
-        - { option: "gcache.size", value: "32M" }
-      galera_server_id: "{{ inventory_hostname | string_2_int }}"
   vars:
     packages_mongodb:
       - mongodb-clients
       - mongodb-server
       - python-pymongo
+    ceilometer_database_name: ceilometer
+    ceilometer_database_user: ceilometer
