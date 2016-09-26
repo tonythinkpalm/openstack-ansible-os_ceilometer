@@ -62,14 +62,12 @@
     - ceilometer-install
 
 - include: ceilometer_apache.yml
-  static: no
   when: inventory_hostname in groups['ceilometer_api']
   tags:
     - ceilometer-install
     - ceilometer-config
 
 - include: ceilometer_service_setup.yml
-  static: no
   when: inventory_hostname == groups['ceilometer_api'][0]
   tags:
     - ceilometer-install
