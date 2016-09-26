@@ -62,7 +62,7 @@ ceilometer_apache_log_level: info
 ceilometer_apache_servertokens: "Prod"
 ceilometer_apache_serversignature: "Off"
 ceilometer_wsgi_threads: 10
-ceilometer_wsgi_processes: "{{ ansible_processor_vcpus | default (1) * 2 }}"
+ceilometer_wsgi_processes: "{{ (ansible_processor_vcpus | int > 0) | ternary (ansible_processor_vcpus, 1) * 2}}"
 
 ## RabbitMQ info
 
