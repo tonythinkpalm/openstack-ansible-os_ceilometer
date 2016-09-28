@@ -5,7 +5,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,24 +16,11 @@
 - name: Place the init script
   template:
     src: "ceilometer-upstart-init.j2"
-    dest: "/etc/init/{{ program_name }}.conf"
+    dest: "/etc/init/{{ item.value.service_name }}.conf"
     mode: "0644"
     owner: "root"
     group: "root"
-  register: upstart_init
+  with_dict: "{{ ceilometer_services }}"
+  when: inventory_hostname in groups[item.value.group]
   notify:
-    - Restart ceilometer services
-
-- name: Reload init scripts
-  shell: |
-    initctl reload-configuration
-  when: upstart_init | changed
-  notify:
-    - Restart ceilometer services
-
-- name: Load service
-  service:
-    name: "{{ program_name }}"
-    enabled: "yes"
-  notify:
-    - Restart ceilometer services
+    - Reload upstart init scripts
