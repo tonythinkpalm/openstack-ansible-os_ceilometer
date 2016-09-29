@@ -44,10 +44,7 @@
     - name: Run tempest
       shell: |
         . {{ tempest_bin }}/activate
-        {{ tempest_bin | dirname }}/run_tempest.sh --no-virtual-env ${RUN_TEMPEST_OPTS} ceilometer.tests.tempest.api.test_telemetry_notification_api
-      environment:
-        RUN_TEMPEST_OPTS: "--serial"
+        {{ tempest_bin | dirname }}/run_tempest.sh --no-virtual-env --serial ceilometer.tests.tempest.api.test_telemetry_notification_api
   vars_files:
     - common/test-vars.yml
-    - test-vars.yml
 
