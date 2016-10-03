@@ -34,7 +34,6 @@
       delay: 10
   vars_files:
     - common/test-vars.yml
-    - test-vars.yml
 
 - name: Playbook for tempest testing ceilometer
   hosts: utility_all
