@@ -1,6 +1,6 @@
-=========================================================
-Configuring the Telemetry (ceilometer) service (optional)
-=========================================================
+==============================================
+Configuring the Telemetry (ceilometer) service
+==============================================
 
 The Telemetry module (ceilometer) performs the following functions:
 
