@@ -16,6 +16,9 @@ transport_url = rabbit://{% for host in ceilometer_rabbitmq_servers.split(',') %
 {% if ceilometer_gnocchi_enabled | bool %}
 event_dispatchers =
 meter_dispatchers = gnocchi
+{% else %}
+meter_dispatchers = database
+event_dispatchers = database
 {% endif %}
 
 [oslo_policy]
@@ -103,9 +106,11 @@ messaging_urls = rabbit://{{ sahara_rabbitmq_telemetry_userid }}:{{ sahara_rabbi
 {% endfor %}
 {% endif %}
 
+{% if ceilometer_db_type | length > 0 %}
 [database]
 metering_connection = {{ ceilometer_connection_string }}
 event_connection = {{ ceilometer_connection_string }}
+{% endif %}
 
 {% if ceilometer_gnocchi_enabled | bool %}
 [dispatcher_gnocchi]

@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ceilometer_db_type: mongodb
 ceilometer_db_ip: "{{ hostvars[groups['mongo_all'][0]]['ansible_host'] }}"
 ceilometer_service_publicuri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_host'] }}:8777"
 ceilometer_service_publicurl: "{{ ceilometer_service_publicuri }}"
