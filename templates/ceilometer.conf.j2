@@ -95,7 +95,7 @@ messaging_urls = rabbit://{{ keystone_rabbitmq_telemetry_userid }}:{{ keystone_r
 {% if swift_ceilometer_enabled %}
 # Ceilometer notifications
 {% for host in groups[swift_rabbitmq_telemetry_host_group] %}
-messaging_urls = rabbit://{{ swift_rabbitmq_telemetry_userid }}:{{ swift_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_ssh_host'] }}:{{ swift_rabbitmq_telemetry_port }}/{{ swift_rabbitmq_telemetry_vhost }}
+messaging_urls = rabbit://{{ swift_rabbitmq_telemetry_userid }}:{{ swift_rabbitmq_telemetry_password }}@{{ hostvars[host]['ansible_host'] }}:{{ swift_rabbitmq_telemetry_port }}/{{ swift_rabbitmq_telemetry_vhost }}
 {% endfor %}
 {% endif %}
 

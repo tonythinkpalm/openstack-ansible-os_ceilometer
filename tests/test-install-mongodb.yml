@@ -57,7 +57,7 @@
         - mongodb_restart | changed
 
     - name: Test mongodb connectivity
-      command: "mongo --host {{ ansible_ssh_host }} --eval ' '"
+      command: "mongo --host {{ ansible_host }} --eval ' '"
       changed_when: False
 
     - name: Add admin user
