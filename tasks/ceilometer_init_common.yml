@@ -21,9 +21,12 @@
 
 - name: Load service
   service:
-   name: "{{ item.value.service_name }}"
-   enabled: "yes"
-  with_dict: "{{ ceilometer_services }}"
-  when: inventory_hostname in groups[item.value.group]
+    name: "{{ item.0.service_name }}"
+    state: "restarted"
+    pattern: "{{ item.0.service_name }}"
+  with_subelements:
+    - "{{ ceilometer_services }}"
+    - group
+  when: inventory_hostname in groups[item.1]
   notify:
     - Restart ceilometer services
