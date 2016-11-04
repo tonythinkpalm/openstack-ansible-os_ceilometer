@@ -37,10 +37,10 @@
     - group
   when: inventory_hostname in groups[item.1]
 
-- name: Create tempfile.d entry
+- name: Create tmpfiles.d entry
   template:
-    src: "ceilometer-systemd-tempfiles.j2"
-    dest: "/etc/tmpfiles.d/ceilometer.conf"
+    src: "ceilometer-systemd-tmpfiles.j2"
+    dest: "/etc/tmpfiles.d/{{ item.0.service_name }}.conf"
     mode: "0644"
     owner: "root"
     group: "root"
