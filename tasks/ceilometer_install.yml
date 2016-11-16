@@ -91,7 +91,7 @@
 
 - name: Update virtualenv path
   command: >
-    virtualenv-tools --update-path=auto {{ ceilometer_bin | dirname }}
+    virtualenv-tools --update-path=auto --reinitialize {{ ceilometer_bin | dirname }}
   when:
     - not ceilometer_developer_mode | bool
     - ceilometer_get_venv | changed or ceilometer_venv_dir | changed
