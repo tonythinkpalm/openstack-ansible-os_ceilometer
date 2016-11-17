@@ -47,27 +47,14 @@ swift_system_shell: /bin/false
 swift_system_comment: swift test user
 swift_system_home_folder: "/var/lib/{{ swift_system_user_name }}"
 
-
-tempest_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
-tempest_pip_packages:
-  - tempest
-  - junitxml
-  - nose
-  - pyOpenSSL # added from the os_tempest role defaults to support tempest plugin deps
-  - python-ceilometerclient
-  - python-cinderclient
-  - python-glanceclient
-  - python-heatclient
-  - python-keystoneclient
-  - python-memcached
-  - python-neutronclient
-  - python-novaclient
-  - python-openstackclient
-  - python-saharaclient
-  - python-subunit
-  - python-swiftclient
+tempest_run: yes
+tempest_venv_tag: "{{ tempest_git_install_branch }}"
+tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
 
 tempest_plugins:
   - name: tempest-ceilometer
     repo: https://git.openstack.org/openstack/ceilometer
     branch: master
+
+tempest_test_whitelist:
+  - ceilometer.tests.tempest.api.test_telemetry_notification_api

@@ -29,6 +29,5 @@
 
 - include: test-install-ceilometer.yml
 
+# Install and execute Tempest
 - include: common/test-install-tempest.yml
-
-- include: test-functional-ceilometer.yml
