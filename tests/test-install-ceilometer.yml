@@ -18,28 +18,11 @@
   user: root
   gather_facts: true
   pre_tasks:
-    - name: Ensure Rabbitmq vhost
-      rabbitmq_vhost:
-        name: "{{ ceilometer_rabbitmq_vhost }}"
-        state: "present"
-      delegate_to: "{{ groups['rabbitmq_all'][0] }}"
-      when:
-        - inventory_hostname == groups['ceilometer_api'][0]
-        - groups['rabbitmq_all']|length > 0
-    - name: Ensure rabbitmq user
-      rabbitmq_user:
-        user: "{{ ceilometer_rabbitmq_userid }}"
-        password: "{{ ceilometer_rabbitmq_password }}"
-        vhost: "{{ ceilometer_rabbitmq_vhost }}"
-        configure_priv: ".*"
-        read_priv: ".*"
-        write_priv: ".*"
-        state: "present"
-      delegate_to: "{{ groups['rabbitmq_all'][0] }}"
-      when:
-        - inventory_hostname == groups['ceilometer_api'][0]
-        - groups['rabbitmq_all']|length > 0
+    - include: common/ensure-rabbitmq.yml
+      vhost_name: "{{ ceilometer_rabbitmq_vhost }}"
+      user_name: "{{ ceilometer_rabbitmq_userid }}"
+      user_password: "{{ ceilometer_rabbitmq_password }}"
   roles:
-    - role: "os_ceilometer"
+    - role: "{{ ceilometer_rolename | default('os_ceilometer') }}"
   vars_files:
     - common/test-vars.yml
