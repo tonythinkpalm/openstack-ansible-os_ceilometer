@@ -25,7 +25,7 @@
 # Needed in order to run Ceilometer Tempest test
 - include: common/test-install-glance.yml
 
-- include: test-install-gnocchi.yml
+- include: common/test-install-gnocchi.yml
 
 - include: test-install-ceilometer.yml
 
