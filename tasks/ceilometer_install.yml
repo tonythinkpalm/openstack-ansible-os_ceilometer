@@ -126,6 +126,15 @@
   when: ceilometer_developer_mode | bool
   notify: Restart ceilometer services
 
+- name: CentOS remove python from path first
+  file:
+    path:  "{{ ceilometer_bin | dirname }}/bin/python2.7"
+    state: "absent"
+  when:
+    - ansible_pkg_mgr == 'yum'
+    - not ceilometer_developer_mode | bool
+    - ceilometer_get_venv | changed or ceilometer_venv_dir | changed
+
 - name: Update virtualenv path
   command: >
     virtualenv-tools --update-path=auto --reinitialize {{ ceilometer_bin | dirname }}
