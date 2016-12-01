@@ -17,31 +17,58 @@
   hosts: mongo_all
   user: root
 
+  roles:
+    - role: "pip_install"
+      tags:
+        - pip
+
   tasks:
     - name: Install mongo packages
-      apt:
+      package:
         state: present
         name: "{{ item }}"
       with_items: "{{ packages_mongodb }}"
 
+    - name: Install client package (Ubuntu)
+      package:
+        state: present
+        name: "{{ item }}"
+      with_items:
+        - mongodb-clients
+        - python-pymongo
+      when: ansible_pkg_mgr == 'apt'
+
+    - name: Install client package (CentOS)
+      package:
+        state: present
+        name: mongodb
+      when: ansible_pkg_mgr == 'yum'
+
+    - name: Install pip package (CentOS)
+      pip:
+        state: latest
+        name: pymongo
+      when: ansible_pkg_mgr == 'yum'
+
     - name: Configure the MongoDB bind address
       lineinfile:
-        dest: /etc/mongodb.conf
+        dest: "{{ mongodb_config_file }}"
         regexp: "^(#)?bind_ip"
         line: "bind_ip = {{ ansible_host }}"
       register: mongodb_bind
 
     - name: Enable the MongoDB smallfiles option
       lineinfile:
-        dest: /etc/mongodb.conf
+        dest: "{{ mongodb_config_file }}"
         regexp: "^(#)?smallfiles"
         line: "smallfiles = true"
       register: mongodb_smallfiles
 
     - name: Restart mongodb
       service:
-        name: mongodb
+        name: "{{ mongodb_service_name }}"
         state: restarted
+        enabled: yes
       when:
         - mongodb_bind | changed or mongodb_smallfiles | changed
       register: mongodb_restart
@@ -82,8 +109,8 @@
         state: present
   vars:
     packages_mongodb:
-      - mongodb-clients
       - mongodb-server
-      - python-pymongo
+    mongodb_config_file: "{{ (ansible_pkg_mgr == 'apt') | ternary('/etc/mongodb.conf','/etc/mongod.conf') }}"
+    mongodb_service_name: "{{ (ansible_pkg_mgr == 'apt') | ternary('mongodb','mongod') }}"
     ceilometer_database_name: ceilometer
     ceilometer_database_user: ceilometer

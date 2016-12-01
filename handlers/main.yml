@@ -29,7 +29,7 @@
 
 - name: Restart Apache
   service:
-    name: "apache2"
+    name: "{{ ceilometer_system_service_name }}"
     state: "restarted"
   register: apache_restart
   until: apache_restart | success
