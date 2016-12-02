@@ -142,7 +142,7 @@ ceilometer_pip_packages:
   - ceilometermiddleware
   - gnocchiclient
   - libvirt-python
-  - oslo.db
+  - oslo.vmware
   - pycrypto
   - PyMySQL
   - pymongo
