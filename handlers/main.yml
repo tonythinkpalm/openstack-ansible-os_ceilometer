@@ -18,16 +18,10 @@
   notify:
     - Restart ceilometer services
 
-- name: Reload upstart init scripts
-  command: initctl reload-configuration
-  notify:
-    - Restart ceilometer services
-
 - name: Restart ceilometer services
   service:
     name: "{{ item.0.service_name }}"
     state: "restarted"
-    pattern: "{{ item.0.service_name }}"
   with_subelements:
     - "{{ ceilometer_services }}"
     - group
@@ -37,7 +31,6 @@
   service:
     name: "apache2"
     state: "restarted"
-    pattern: "apache2"
   register: apache_restart
   until: apache_restart | success
   retries: 5
