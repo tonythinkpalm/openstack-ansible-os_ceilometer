@@ -13,10 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- include: ceilometer_init_upstart.yml
-  when:
-    - ansible_service_mgr == 'upstart'
-
 - include: ceilometer_init_systemd.yml
   when:
     - ansible_service_mgr == 'systemd'
@@ -25,7 +21,6 @@
   service:
     name: "{{ item.0.service_name }}"
     state: "restarted"
-    pattern: "{{ item.0.service_name }}"
   with_subelements:
     - "{{ ceilometer_services }}"
     - group
