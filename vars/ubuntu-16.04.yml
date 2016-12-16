@@ -26,6 +26,8 @@ ceilometer_distro_packages:
 ceilometer_developer_mode_distro_packages:
   - libvirt-dev
   - pkg-config
+  - libxml2-dev
+  - libxslt1-dev
 
 ceilometer_apache_distro_packages:
   - apache2
