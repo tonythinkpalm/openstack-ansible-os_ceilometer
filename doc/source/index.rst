@@ -20,6 +20,9 @@ Table of Contents
 
    configure-ceilometer.rst
 
+To clone or view the source code for this repository, visit the role repository
+for `os_ceilometer <https://github.com/openstack/openstack-ansible-os_ceilometer>`_.
+
 Default variables
 ~~~~~~~~~~~~~~~~~
 
