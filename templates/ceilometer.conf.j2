@@ -126,7 +126,6 @@ max_retries = 80
 
 [keystone_authtoken]
 insecure = {{ keystone_service_internaluri_insecure | bool }}
-signing_dir = /var/cache/ceilometer
 auth_uri = {{ keystone_service_internaluri }}
 auth_url = {{ keystone_service_adminuri }}
 auth_plugin = {{ ceilometer_keystone_auth_plugin }}
@@ -140,7 +139,6 @@ region_name = {{ ceilometer_service_region }}
 memcached_servers = {{ memcached_servers }}
 
 token_cache_time = 300
-revocation_cache_time = 60
 
 memcache_security_strategy = ENCRYPT
 memcache_secret_key = {{ memcached_encryption_key }}
