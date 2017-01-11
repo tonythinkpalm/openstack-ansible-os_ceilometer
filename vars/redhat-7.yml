@@ -17,6 +17,7 @@ ceilometer_distro_packages:
   - git
   - rpcbind
   - rsync
+  - which
 
 # Packages required in developer mode, where packages are built locally
 ceilometer_developer_mode_distro_packages:
