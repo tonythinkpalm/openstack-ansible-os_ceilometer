@@ -82,7 +82,7 @@
     dest: "/var/cache/{{ ceilometer_venv_download_url | basename }}"
     checksum: "sha1:{{ lookup('url', ceilometer_venv_download_url | replace('tgz', 'checksum')) }}"
   register: ceilometer_get_venv
-  when: not ceilometer_developer_mode | bool
+  when: ceilometer_venv_download | bool
 
 - name: Remove existing venv
   file:
@@ -95,18 +95,14 @@
     path: "{{ ceilometer_bin | dirname }}"
     state: directory
   register: ceilometer_venv_dir
-  when:
-    - not ceilometer_developer_mode | bool
-    - ceilometer_get_venv | changed
+  when: ceilometer_get_venv | changed
 
 - name: Unarchive pre-built venv
   unarchive:
     src: "/var/cache/{{ ceilometer_venv_download_url | basename }}"
     dest: "{{ ceilometer_bin | dirname }}"
     copy: "no"
-  when:
-    - not ceilometer_developer_mode | bool
-    - ceilometer_get_venv | changed or ceilometer_venv_dir | changed
+  when: ceilometer_get_venv | changed
   notify: Restart ceilometer services
 
 - name: Install pip packages
@@ -123,7 +119,7 @@
   until: install_packages|success
   retries: 5
   delay: 2
-  when: ceilometer_developer_mode | bool
+  when: ceilometer_get_venv | failed or ceilometer_get_venv | skipped
   notify: Restart ceilometer services
 
 - name: CentOS remove python from path first
@@ -132,12 +128,9 @@
     state: "absent"
   when:
     - ansible_pkg_mgr == 'yum'
-    - not ceilometer_developer_mode | bool
-    - ceilometer_get_venv | changed or ceilometer_venv_dir | changed
+    - ceilometer_get_venv | changed
 
 - name: Update virtualenv path
   command: >
     virtualenv-tools --update-path=auto --reinitialize {{ ceilometer_bin | dirname }}
-  when:
-    - not ceilometer_developer_mode | bool
-    - ceilometer_get_venv | changed or ceilometer_venv_dir | changed
+  when: ceilometer_get_venv | changed

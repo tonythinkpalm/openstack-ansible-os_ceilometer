@@ -36,6 +36,9 @@ ceilometer_developer_constraints:
 ceilometer_venv_tag: untagged
 ceilometer_bin: "/openstack/venvs/ceilometer-{{ ceilometer_venv_tag }}/bin"
 
+# venv_download, even when true, will use the fallback method of building the
+# venv from scratch if the venv download fails.
+ceilometer_venv_download: "{{ not ceilometer_developer_mode | bool }}"
 # URL of the pre-built virtualenv
 ceilometer_venv_download_url: http://127.0.0.1/venvs/untagged/ubuntu/ceilometer.tgz
 
