@@ -28,53 +28,71 @@
       dest: "/etc/ceilometer/ceilometer.conf"
       config_overrides: "{{ ceilometer_ceilometer_conf_overrides }}"
       config_type: "ini"
-    - src: "api_paste.ini.j2"
-      dest: "/etc/ceilometer/api_paste.ini"
-      config_overrides: "{{ ceilometer_api_paste_ini_overrides }}"
-      config_type: "ini"
-    - src: "rootwrap.conf.j2"
-      dest: "/etc/ceilometer/rootwrap.conf"
-      owner: "root"
-      group: "root"
-      config_overrides: "{{ ceilometer_rootwrap_conf_overrides }}"
-      config_type: "ini"
-    - src: "event_pipeline.yaml.j2"
-      dest: "/etc/ceilometer/event_pipeline.yaml"
-      config_overrides: "{{ ceilometer_event_pipeline_yaml_overrides }}"
-      config_type: "yaml"
-      list_extend: false
-    - src: "event_definitions.yaml.j2"
-      dest: "/etc/ceilometer/event_definitions.yaml"
-      config_overrides: "{{ ceilometer_event_definitions_yaml_overrides }}"
-      config_type: "yaml"
-      list_extend: false
     - src: "pipeline.yaml.j2"
       dest: "/etc/ceilometer/pipeline.yaml"
       config_overrides: "{{ ceilometer_pipeline_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-    - src: "gnocchi_resources.yaml.j2"
+  notify:
+    - Restart ceilometer services
+    - Restart Apache
+
+- name: Retrieve and config_template upstream files
+  config_template:
+    content: "{{ lookup('pipe', 'curl ' ~ ceilometer_git_config_lookup_location ~ item.path | default('etc/ceilometer/') ~ item.name + '?h=' ~ ceilometer_git_install_branch) | string }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default(ceilometer_system_user_name ) }}"
+    group: "{{ item.group | default(ceilometer_system_group_name) }}"
+    config_overrides: "{{ item.config_overrides }}"
+    config_type: "{{ item.config_type }}"
+    list_extend: "{{ item.list_extend | default(omit) }}"
+  with_items:
+    - name: "gnocchi_resources.yaml"
       dest: "/etc/ceilometer/gnocchi_resources.yaml"
       config_overrides: "{{ ceilometer_gnocci_resources_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-    - src: "osprofiler_event_definitions.yaml.j2"
+      path: "ceilometer/dispatcher/data/"
+    - name: "rootwrap.conf"
+      dest: "/etc/ceilometer/rootwrap.conf"
+      owner: "root"
+      group: "root"
+      config_overrides: "{{ ceilometer_rootwrap_conf_overrides }}"
+      config_type: "ini"
+    - name: "api_paste.ini"
+      dest: "/etc/ceilometer/api_paste.ini"
+      config_overrides: "{{ ceilometer_api_paste_ini_overrides }}"
+      config_type: "ini"
+    - name: "event_pipeline.yaml"
+      dest: "/etc/ceilometer/event_pipeline.yaml"
+      config_overrides: "{{ ceilometer_event_pipeline_yaml_overrides }}"
+      config_type: "yaml"
+      list_extend: false
+    - name: "event_definitions.yaml"
+      dest: "/etc/ceilometer/event_definitions.yaml"
+      config_overrides: "{{ ceilometer_event_definitions_yaml_overrides }}"
+      config_type: "yaml"
+      list_extend: false
+    - name: "osprofiler_event_definitions.yaml"
       dest: "/etc/ceilometer/osprofiler_event_definitions.yaml"
       config_overrides: "{{ ceilometer_osprofiler_event_definitions_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-    - src: "loadbalancer_v2_meter_definitions.yaml.j2"
+      path: "etc/ceilometer/examples/"
+    - name: "loadbalancer_v2_meter_definitions.yaml"
       dest: "/etc/ceilometer/loadbalancer_v2_meter_definitions.yaml"
       config_overrides: "{{ ceilometer_loadbalancer_v2_meter_definitions_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-    - src: "policy.json.j2"
+      path: "etc/ceilometer/examples/"
+    - name: "policy.json"
       dest: "/etc/ceilometer/policy.json"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
   notify:
     - Restart ceilometer services
     - Restart Apache
+
 
 - name: Drop ceilometer API WSGI Configs
   template:

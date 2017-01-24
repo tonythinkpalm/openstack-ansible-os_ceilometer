@@ -27,6 +27,7 @@ ceilometer_developer_mode: false
 ## The git source/branch
 ceilometer_git_repo: https://git.openstack.org/openstack/ceilometer
 ceilometer_git_install_branch: master
+ceilometer_git_config_lookup_location: https://git.openstack.org/cgit/openstack/ceilometer/plain/
 
 ## The packages to build from source (used in developer mode)
 ceilometer_developer_constraints:
@@ -122,6 +123,7 @@ sahara_ceilometer_enabled: false
 ceilometer_aodh_enabled: false
 ceilometer_gnocchi_enabled: false
 
+# TODO (andymccr): Remove in Queen release (along with config template overrides)
 # Sampling interval for ceilometer-polling services
 ceilometer_sample_interval: 600
 ceilometer_meter_sample_interval: "{{ ceilometer_sample_interval }}"
