@@ -21,6 +21,10 @@ meter_dispatchers = database
 event_dispatchers = database
 {% endif %}
 
+{% if 'ceilometer_agent_central' in group_names %}
+polling_namespaces = central
+{% endif %}
+
 [oslo_policy]
 policy_file = /etc/ceilometer/policy.json
 
