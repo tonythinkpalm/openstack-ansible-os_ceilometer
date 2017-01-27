@@ -14,7 +14,7 @@ aodh_is_enabled = {{ ceilometer_aodh_enabled | bool }}
 transport_url = rabbit://{% for host in ceilometer_rabbitmq_servers.split(',') %}{{ ceilometer_rabbitmq_userid }}:{{ ceilometer_rabbitmq_password }}@{{ host }}:{{ ceilometer_rabbitmq_port }}{% if not loop.last %},{% else %}/{{ ceilometer_rabbitmq_vhost }}{% endif %}{% endfor %}
 
 {% if ceilometer_gnocchi_enabled | bool %}
-event_dispatchers =
+event_dispatchers = gnocchi
 meter_dispatchers = gnocchi
 {% endif %}
 
