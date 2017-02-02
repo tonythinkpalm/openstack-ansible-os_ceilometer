@@ -89,6 +89,11 @@
       dest: "/etc/ceilometer/policy.json"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
+    - name: "polling.yaml"
+      dest: "/etc/ceilometer/polling.yaml"
+      config_overrides: "{{ ceilometer_polling_yaml_overrides }}"
+      config_type: "yaml"
+      list_extend: false
   notify:
     - Restart ceilometer services
     - Restart Apache
