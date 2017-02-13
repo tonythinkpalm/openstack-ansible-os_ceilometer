@@ -49,7 +49,7 @@
   with_items:
     - name: "gnocchi_resources.yaml"
       dest: "/etc/ceilometer/gnocchi_resources.yaml"
-      config_overrides: "{{ ceilometer_gnocci_resources_yaml_overrides }}"
+      config_overrides: "{{ ceilometer_gnocchi_resources_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
       path: "ceilometer/dispatcher/data/"
