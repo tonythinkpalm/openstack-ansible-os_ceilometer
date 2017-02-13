@@ -191,7 +191,7 @@ ceilometer_api_paste_ini_overrides: {}
 ceilometer_event_definitions_yaml_overrides: {}
 ceilometer_event_pipeline_yaml_overrides: {}
 ceilometer_pipeline_yaml_overrides: {}
-ceilometer_gnocci_resources_yaml_overrides: {}
+ceilometer_gnocchi_resources_yaml_overrides: {}
 ceilometer_osprofiler_event_definitions_yaml_overrides: {}
 ceilometer_loadbalancer_v2_meter_definitions_yaml_overrides: {}
 ceilometer_polling_yaml_overrides: {}
