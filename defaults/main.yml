@@ -105,7 +105,6 @@ ceilometer_service_in_ldap: false
 ## Ceilometer config
 # If the following variables are unset in user_variables, the value set will be half the number of available VCPUs
 # ceilometer_api_workers: 1
-# ceilometer_collector_workers: 1
 # ceilometer_notification_workers: 1
 
 # Enable/Disable Ceilometer per service
@@ -157,10 +156,6 @@ ceilometer_pip_packages:
 
 ## Service Name-Group Mapping
 ceilometer_services:
-  ceilometer-collector:
-    group:
-      - ceilometer_collector
-    service_name: ceilometer-collector
   ceilometer-agent-notification:
     group:
       - ceilometer_agent_notification

@@ -15,7 +15,6 @@ Ansible Role that installs and configures OpenStack Ceilometer.
 This role will install the following:
     * ceilometer-api
     * ceilometer-agent-notification
-    * ceilometer-collector
     * ceilometer-polling
     * ceilometer-registry
 
