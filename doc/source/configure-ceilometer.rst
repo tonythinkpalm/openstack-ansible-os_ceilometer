@@ -169,6 +169,5 @@ Specify the following configurations in the
   - The port of the MongoDB service: ``ceilometer_db_port: 27017``
 
 
-Run the ``os-ceilometer-install.yml`` playbook. If deploying a new OpenStack
-(instead of only ceilometer), run ``setup-openstack.yml``. The
-ceilometer playbooks run as part of this playbook.
+To install Ceilometer on an existing OpenStack-Ansible environment, run
+the ``os-ceilometer-install.yml`` playbook.
