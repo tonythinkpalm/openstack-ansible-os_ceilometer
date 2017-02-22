@@ -108,6 +108,10 @@ ceilometer_service_in_ldap: false
 # ceilometer_collector_workers: 1
 # ceilometer_notification_workers: 1
 
+## Cap the maximum number of threads / workers when a user value is unspecified.
+ceilometer_api_threads_max: 16
+ceilometer_api_threads: "{{ [[ansible_processor_vcpus|default(2) // 2, 1] | max, ceilometer_api_threads_max] | min }}"
+
 # Enable/Disable Ceilometer per service
 glance_ceilometer_enabled: false
 nova_ceilometer_enabled: false

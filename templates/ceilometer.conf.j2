@@ -1,8 +1,5 @@
 #{{ ansible_managed}}
 
-{% set _workers = ansible_processor_vcpus|default(2) // 2 %}
-{% set workers = _workers if _workers > 0 else 1 %}
-
 [DEFAULT]
 # Disable stderr logging
 use_stderr = False
@@ -33,7 +30,7 @@ rabbit_use_ssl = {{ ceilometer_rabbitmq_use_ssl }}
 
 [api]
 gnocchi_is_enabled = {{ ceilometer_gnocchi_enabled | bool }}
-workers = {{ ceilometer_api_workers | default(workers) }}
+workers = {{ ceilometer_api_workers | default(ceilometer_api_threads) }}
 port = 8777
 
 [collector]
@@ -44,7 +41,7 @@ batch_timeout = 5
 {% endif %}
 
 [notification]
-workers = {{ ceilometer_notification_workers | default(workers) }}
+workers = {{ ceilometer_notification_workers | default(ceilometer_api_threads) }}
 store_events = {{ not ceilometer_gnocchi_enabled | bool }}
 
 # Notification queues to listen on
