@@ -104,13 +104,9 @@ services:
 
   - A notification agent (ceilometer-agent-notification): Runs on a
     central management server(s) and consumes messages from the
-    message queue(s) to build event and metering data. Multiple
-    notification agents can be started to enable workload partitioning
-    (See HA section below).
-
-  - A collector (ceilometer-collector): Runs on central management
-    server(s) and dispatches data to a data store
-    or external consumer without modification.
+    message queue(s) to build event and metering data, then sends it
+    to one or more publishers. Multiple notification agents can be
+    started to enable workload partitioning (See HA section below).
 
   - An API server (ceilometer-api): Runs on one or more central
     management servers to provide data access from the data store.
