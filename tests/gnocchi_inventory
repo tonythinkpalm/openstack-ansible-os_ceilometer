@@ -32,9 +32,6 @@ infra1
 [glance_all]
 infra1
 
-[ceilometer_api]
-ceilometer
-
 [ceilometer_agent_central]
 ceilometer
 
@@ -45,7 +42,6 @@ ceilometer
 ceilometer
 
 [ceilometer_all:children]
-ceilometer_api
 ceilometer_agent_central
 ceilometer_agent_notification
 ceilometer_agent_compute

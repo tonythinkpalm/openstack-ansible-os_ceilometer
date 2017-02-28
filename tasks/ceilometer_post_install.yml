@@ -35,7 +35,6 @@
       list_extend: false
   notify:
     - Restart ceilometer services
-    - Restart Apache
 
 - name: Retrieve and config_template upstream files
   config_template:
@@ -96,18 +95,6 @@
       list_extend: false
   notify:
     - Restart ceilometer services
-    - Restart Apache
-
-
-- name: Drop ceilometer API WSGI Configs
-  template:
-    src: ceilometer-api-wsgi.py.j2
-    dest: /var/www/cgi-bin/ceilometer/ceilometer-api
-    owner: "{{ ceilometer_system_user_name }}"
-    group: "{{ ceilometer_system_group_name }}"
-    mode: "0755"
-  notify:
-    - Restart Apache
 
 - name: Copy rootwrap filters
   copy:

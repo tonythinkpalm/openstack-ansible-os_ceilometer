@@ -59,13 +59,6 @@ ceilometer_db_ip: localhost
 ceilometer_db_port: 27017
 ceilometer_connection_string: "{{ ceilometer_db_type }}://{{ ceilometer_database_user }}:{{ ceilometer_container_db_password }}@{{ ceilometer_db_ip }}:{{ ceilometer_db_port }}/{{ ceilometer_database_name }}"
 
-## Apache setup
-ceilometer_apache_log_level: info
-ceilometer_apache_servertokens: "Prod"
-ceilometer_apache_serversignature: "Off"
-ceilometer_wsgi_threads: 10
-ceilometer_wsgi_processes: "{{ (ansible_processor_vcpus | int > 0) | ternary (ansible_processor_vcpus, 1) * 2}}"
-
 ## RabbitMQ info
 
 ## Configuration for RPC communications
@@ -92,13 +85,6 @@ ceilometer_service_user_name: ceilometer
 ceilometer_service_project_name: service
 ceilometer_service_project_domain_id: default
 ceilometer_service_user_domain_id: default
-ceilometer_service_publicuri: "{{ ceilometer_service_proto }}://{{ external_lb_vip_address }}:{{ ceilometer_service_port }}"
-ceilometer_service_publicurl: "{{ ceilometer_service_publicuri }}"
-ceilometer_service_internaluri: "{{ ceilometer_service_proto }}://{{ internal_lb_vip_address }}:{{ ceilometer_service_port }}"
-ceilometer_service_internalurl: "{{ ceilometer_service_internaluri }}"
-ceilometer_service_adminuri: "{{ ceilometer_service_proto }}://{{ internal_lb_vip_address }}:{{ ceilometer_service_port }}"
-ceilometer_service_adminurl: "{{ ceilometer_service_adminuri }}"
-
 
 ceilometer_service_in_ldap: false
 

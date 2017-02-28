@@ -1,4 +1,4 @@
-[all]
+all]
 localhost ansible_become=True
 infra1 ansible_host=10.1.0.2 ansible_become=True ansible_user=root
 openstack1 ansible_host=10.1.0.3 ansible_become=True ansible_user=root
@@ -37,7 +37,7 @@ infra1
 glance_api
 glance_registry
 
-[ceilometer_api]
+[ceilometer_central]
 openstack1
 
 [ceilometer_agent_central]
@@ -50,7 +50,7 @@ openstack1
 openstack1
 
 [ceilometer_all:children]
-ceilometer_api
+ceilometer_central
 ceilometer_agent_central
 ceilometer_agent_notification
 ceilometer_agent_compute

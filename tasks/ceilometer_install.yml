@@ -42,18 +42,6 @@
   when:
     - ceilometer_developer_mode | bool
 
-- name: Install distro packages for Apache
-  package:
-    name: "{{ item }}"
-    state: "{{ ceilometer_package_state }}"
-  register: install_packages
-  until: install_packages|success
-  retries: 5
-  delay: 2
-  with_items: "{{ ceilometer_apache_distro_packages }}"
-  when:
-    - inventory_hostname in groups['ceilometer_api']
-
 - name: Create developer mode constraint file
   copy:
     dest: "/opt/developer-pip-constraints.txt"

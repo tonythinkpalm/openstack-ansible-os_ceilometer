@@ -4,8 +4,6 @@ Ceilometer role for OpenStack-Ansible
 
 This Ansible role installs and configures OpenStack ceilometer.
 
-The ceilometer API is served using Apache mod_wsgi by default.
-
 Meter and notification storage is configured to use a MongoDB backend
 by default. This role does not install and configure the MongoDB backend.
 Deployers wishing to use MongoDB must install and configure it prior to
