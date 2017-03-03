@@ -56,8 +56,8 @@
     # TODO: (alextricity25) Remove this conditional once the integrated
     # repo changes have been made https://review.openstack.org/#/c/438740
     - groups['ceilometer_api'] is defined and inventory_hostname == groups['ceilometer_api'][0]
-    # ceilometer_central is the new ceilometer container. These inventory
+    # ceilometer_central_container is the new ceilometer container. These inventory
     # changes are going to be made in the integrated repo
-    - groups['ceilometer_central'] is defined and inventory_hostname == groups['ceilometer_central'][0]
+    - groups['ceilometer_central_container'] is defined and inventory_hostname == groups['ceilometer_central_container'][0]
   tags:
     - ceilometer-config

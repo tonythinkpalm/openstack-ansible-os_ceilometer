@@ -37,9 +37,6 @@ infra1
 glance_api
 glance_registry
 
-[ceilometer_central]
-openstack1
-
 [ceilometer_agent_central]
 openstack1
 
@@ -50,7 +47,6 @@ openstack1
 openstack1
 
 [ceilometer_all:children]
-ceilometer_central
 ceilometer_agent_central
 ceilometer_agent_notification
 ceilometer_agent_compute
