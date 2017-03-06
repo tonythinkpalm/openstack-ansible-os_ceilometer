@@ -34,7 +34,7 @@ workers = {{ ceilometer_api_workers | default(ceilometer_api_threads) }}
 port = 8777
 
 [collector]
-workers = {{ ceilometer_collector_workers | default(workers) }}
+workers = {{ ceilometer_collector_workers | default(ceilometer_api_threads) }}
 {% if ceilometer_gnocchi_enabled | bool %}
 batch_size = 10
 batch_timeout = 5
