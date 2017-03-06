@@ -89,9 +89,9 @@ ceilometer_service_user_domain_id: default
 ceilometer_service_in_ldap: false
 
 ## Ceilometer config
-# If the following variables are unset in user_variables, the value set will be half the number of available VCPUs
-# ceilometer_api_workers: 1
-# ceilometer_notification_workers: 1
+# Cap the maximum number of threads / workers when a user value is unspecified
+ceilometer_notification_workers_max: 16
+ceilometer_notification_workers: "{{ [[ansible_processor_vcpus|default(2) // 2, 1] | max, ceilometer_notification_workers_max] | min }}"
 
 # Enable/Disable Ceilometer per service
 glance_ceilometer_enabled: false
