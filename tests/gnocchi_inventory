@@ -1,13 +1,13 @@
 [all]
-localhost ansible_become=True
-infra1 ansible_host=10.1.0.2 ansible_become=True ansible_user=root
-ceilometer ansible_host=10.1.0.3 ansible_become=True ansible_user=root
-gnocchi ansible_host=10.1.0.4 ansible_become=True ansible_user=root
+localhost
+infra1
+openstack1
+gnocchi1
 
 [all_containers]
 infra1
-ceilometer
-gnocchi
+openstack1
+gnocchi1
 
 [rabbitmq_all]
 infra1
@@ -33,13 +33,13 @@ infra1
 infra1
 
 [ceilometer_agent_central]
-ceilometer
+openstack1
 
 [ceilometer_agent_notification]
-ceilometer
+openstack1
 
 [ceilometer_agent_compute]
-ceilometer
+openstack1
 
 [ceilometer_all:children]
 ceilometer_agent_central
@@ -47,4 +47,4 @@ ceilometer_agent_notification
 ceilometer_agent_compute
 
 [gnocchi_all]
-gnocchi
+gnocchi1
