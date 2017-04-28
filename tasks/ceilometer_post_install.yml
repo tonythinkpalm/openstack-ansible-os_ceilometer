@@ -35,7 +35,7 @@
       list_extend: false
   notify:
     - Restart ceilometer services
-    - Restart Apache
+    - Restart web server
 
 - name: Retrieve and config_template upstream files
   config_template:
@@ -86,7 +86,7 @@
       list_extend: false
       path: "etc/ceilometer/examples/"
     - name: "policy.json"
-      dest: "/etc/ceilometer/policy.json"
+      dest: "/etc/ceilometer/policy.json-{{ ceilometer_venv_tag }}"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
     - name: "polling.yaml"
@@ -96,7 +96,7 @@
       list_extend: false
   notify:
     - Restart ceilometer services
-    - Restart Apache
+    - Restart web server
 
 
 - name: Drop ceilometer API WSGI Configs
@@ -107,7 +107,7 @@
     group: "{{ ceilometer_system_group_name }}"
     mode: "0755"
   notify:
-    - Restart Apache
+    - Restart web server
 
 - name: Copy rootwrap filters
   copy:

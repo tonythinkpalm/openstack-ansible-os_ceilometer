@@ -60,6 +60,8 @@
     - "{{ ceilometer_services }}"
     - group
   when: inventory_hostname in groups[item.1]
+  notify:
+    - Restart ceilometer services
 
 - name: Place the systemd init script
   config_template:
