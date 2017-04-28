@@ -44,7 +44,7 @@
   tags:
     - ceilometer-config
 
-- include: ceilometer_init_common.yml
+- include: "ceilometer_init_{{ ansible_service_mgr }}.yml"
   tags:
     - ceilometer-config
 

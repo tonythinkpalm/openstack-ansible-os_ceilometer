@@ -85,7 +85,7 @@
       list_extend: false
       path: "etc/ceilometer/examples/"
     - name: "policy.json"
-      dest: "/etc/ceilometer/policy.json"
+      dest: "/etc/ceilometer/policy.json-{{ ceilometer_venv_tag }}"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
     - name: "polling.yaml"
