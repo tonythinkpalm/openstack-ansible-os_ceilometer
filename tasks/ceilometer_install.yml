@@ -61,11 +61,18 @@
   retries: 5
   delay: 2
 
+- name: Retrieve checksum for venv download
+  uri:
+    url: "{{ ceilometer_venv_download_url | replace('tgz', 'checksum') }}"
+    return_content: yes
+  register: ceilometer_venv_checksum
+  when: ceilometer_venv_download | bool
+
 - name: Attempt venv download
   get_url:
     url: "{{ ceilometer_venv_download_url }}"
     dest: "/var/cache/{{ ceilometer_venv_download_url | basename }}"
-    checksum: "sha1:{{ lookup('url', ceilometer_venv_download_url | replace('tgz', 'checksum')) }}"
+    checksum: "sha1:{{ ceilometer_venv_checksum.content | trim }}"
   register: ceilometer_get_venv
   when: ceilometer_venv_download | bool
 
