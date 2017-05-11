@@ -1,0 +1,36 @@
+---
+# Copyright 2017, Rackspace US, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# These vars find a file on the deployment node, if it exists - otherwise the result is empty.
+ceilometer_api_paste_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_api_paste_default_file_path ~ ' 2>/dev/null || true') }}"
+ceilometer_gnocchi_resources_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_gnocchi_resources_default_file_path ~ ' 2>/dev/null || true') }}"
+ceilometer_loadbalancer_v2_meter_definitions_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_loadbalancer_v2_meter_definitions_default_file_path ~ ' 2>/dev/null || true') }}"
+ceilometer_osprofiler_event_definitions_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_osprofiler_event_definitions_default_file_path ~ ' 2>/dev/null || true') }}"
+ceilometer_policy_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_policy_default_file_path ~ ' 2>/dev/null || true') }}"
+ceilometer_polling_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_polling_default_file_path ~ ' 2>/dev/null || true') }}"
+
+# These vars find the appropriate result content from the with_items loop
+ceilometer_api_paste_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_api_paste_git_file_path) | map(attribute='content') | first }}
+ceilometer_gnocchi_resources_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_gnocchi_resources_git_file_path) | map(attribute='content') | first }}
+ceilometer_loadbalancer_v2_meter_definitions_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_loadbalancer_v2_meter_definitions_git_file_path) | map(attribute='content') | first }}
+ceilometer_osprofiler_event_definitions_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_osprofiler_event_definitions_git_file_path) | map(attribute='content') | first }}
+ceilometer_policy_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_policy_git_file_path) | map(attribute='content') | first }}
+ceilometer_polling_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_polling_git_file_path) | map(attribute='content') | first }}

@@ -13,13 +13,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Copy ceilometer config
+- name: Retrieve default configuration files
+  uri:
+    url: "{{ item }}"
+    return_content: yes
+  with_items:
+    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_api_paste_git_file_path }}"
+    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_gnocchi_resources_git_file_path }}"
+    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_loadbalancer_v2_meter_definitions_git_file_path }}"
+    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_osprofiler_event_definitions_git_file_path }}"
+    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_policy_git_file_path }}"
+    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_polling_git_file_path }}"
+  register: _git_file_fetch
+
+- name: Copy ceilometer configuration files
   config_template:
-    src: "{{ item.src }}"
+    content: "{{ item.content | default(omit) }}"
+    src: "{{ item.src  | default(omit) }}"
     dest: "{{ item.dest }}"
-    owner: "{{ item.owner|default(ceilometer_system_user_name) }}"
-    group: "{{ item.group|default(ceilometer_system_group_name) }}"
-    mode: "0644"
+    owner: "{{ item.owner | default(ceilometer_system_user_name) }}"
+    group: "{{ item.group | default(ceilometer_system_group_name) }}"
+    mode: "{{ item.mode | default('0644') }}"
     config_overrides: "{{ item.config_overrides }}"
     config_type: "{{ item.config_type }}"
     list_extend: "{{ item.list_extend | default(omit) }}"
@@ -33,66 +47,40 @@
       config_overrides: "{{ ceilometer_pipeline_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-  notify:
-    - Restart ceilometer services
-
-- name: Retrieve and config_template upstream files
-  config_template:
-    content: "{{ lookup('pipe', 'curl ' ~ ceilometer_git_config_lookup_location ~ item.path | default('etc/ceilometer/') ~ item.name + '?h=' ~ ceilometer_git_install_branch) | string }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner | default(ceilometer_system_user_name ) }}"
-    group: "{{ item.group | default(ceilometer_system_group_name) }}"
-    config_overrides: "{{ item.config_overrides }}"
-    config_type: "{{ item.config_type }}"
-    list_extend: "{{ item.list_extend | default(omit) }}"
-  with_items:
-    - name: "gnocchi_resources.yaml"
-      dest: "/etc/ceilometer/gnocchi_resources.yaml"
-      config_overrides: "{{ ceilometer_gnocchi_resources_yaml_overrides }}"
-      config_type: "yaml"
-      list_extend: false
-      path: "ceilometer/dispatcher/data/"
-    - name: "rootwrap.conf"
+    - src: "rootwrap.conf.j2"
       dest: "/etc/ceilometer/rootwrap.conf"
       owner: "root"
       group: "root"
       config_overrides: "{{ ceilometer_rootwrap_conf_overrides }}"
       config_type: "ini"
-    - name: "api_paste.ini"
-      dest: "/etc/ceilometer/api_paste.ini"
+    - dest: "/etc/ceilometer/api_paste.ini"
       config_overrides: "{{ ceilometer_api_paste_ini_overrides }}"
       config_type: "ini"
-    - name: "event_pipeline.yaml"
-      dest: "/etc/ceilometer/event_pipeline.yaml"
-      config_overrides: "{{ ceilometer_event_pipeline_yaml_overrides }}"
+      content: "{{ ceilometer_api_paste_user_content | default(ceilometer_api_paste_default_content, true) }}"
+    - dest: "/etc/ceilometer/gnocchi_resources.yaml"
+      config_overrides: "{{ ceilometer_gnocchi_resources_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-    - name: "event_definitions.yaml"
-      dest: "/etc/ceilometer/event_definitions.yaml"
-      config_overrides: "{{ ceilometer_event_definitions_yaml_overrides }}"
-      config_type: "yaml"
-      list_extend: false
-    - name: "osprofiler_event_definitions.yaml"
-      dest: "/etc/ceilometer/osprofiler_event_definitions.yaml"
-      config_overrides: "{{ ceilometer_osprofiler_event_definitions_yaml_overrides }}"
-      config_type: "yaml"
-      list_extend: false
-      path: "etc/ceilometer/examples/"
-    - name: "loadbalancer_v2_meter_definitions.yaml"
-      dest: "/etc/ceilometer/loadbalancer_v2_meter_definitions.yaml"
+      content: "{{ ceilometer_gnocchi_resources_user_content | default(ceilometer_gnocchi_resources_default_content, true) }}"
+    - dest: "/etc/ceilometer/loadbalancer_v2_meter_definitions.yaml"
       config_overrides: "{{ ceilometer_loadbalancer_v2_meter_definitions_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
-      path: "etc/ceilometer/examples/"
-    - name: "policy.json"
-      dest: "/etc/ceilometer/policy.json-{{ ceilometer_venv_tag }}"
+      content: "{{ ceilometer_loadbalancer_v2_meter_definitions_user_content | default(ceilometer_loadbalancer_v2_meter_definitions_default_content, true) }}"
+    - dest: "/etc/ceilometer/osprofiler_event_definitions.yaml"
+      config_overrides: "{{ ceilometer_osprofiler_event_definitions_yaml_overrides }}"
+      config_type: "yaml"
+      list_extend: false
+      content: "{{ ceilometer_osprofiler_event_definitions_user_content | default(ceilometer_osprofiler_event_definitions_default_content, true) }}"
+    - dest: "/etc/ceilometer/policy.json-{{ ceilometer_venv_tag }}"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
-    - name: "polling.yaml"
-      dest: "/etc/ceilometer/polling.yaml"
+      content: "{{ ceilometer_policy_user_content | default(ceilometer_policy_default_content, true) }}"
+    - dest: "/etc/ceilometer/polling.yaml"
       config_overrides: "{{ ceilometer_polling_yaml_overrides }}"
       config_type: "yaml"
       list_extend: false
+      content: "{{ ceilometer_polling_user_content | default(ceilometer_polling_default_content, true) }}"
   notify:
     - Restart ceilometer services
 
