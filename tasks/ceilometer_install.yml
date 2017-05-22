@@ -95,3 +95,10 @@
   when:
     - not ceilometer_developer_mode | bool
     - ceilometer_get_venv | changed or ceilometer_venv_dir | changed
+
+- name: Record the venv tag deployed
+  ini_file:
+    dest: "/etc/ansible/facts.d/openstack_ansible.fact"
+    section: ceilometer
+    option: venv_tag
+    value: "{{ ceilometer_venv_tag }}"
