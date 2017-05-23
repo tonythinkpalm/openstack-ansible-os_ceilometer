@@ -26,7 +26,7 @@ polling_namespaces = central
 policy_file = /etc/ceilometer/policy.json
 
 [oslo_messaging_rabbit]
-rabbit_use_ssl = {{ ceilometer_rabbitmq_use_ssl }}
+ssl = {{ ceilometer_rabbitmq_use_ssl }}
 
 [api]
 gnocchi_is_enabled = {{ ceilometer_gnocchi_enabled | bool }}
