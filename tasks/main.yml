@@ -50,14 +50,6 @@
 
 - include: ceilometer_service_setup.yml
   when:
-    # The ceilometer_api inventory group is deprecated, but we need this
-    # conditional here to pass gate tests until the integrated repo
-    # changes are made.
-    # TODO: (alextricity25) Remove this conditional once the integrated
-    # repo changes have been made https://review.openstack.org/#/c/438740
-    - groups['ceilometer_api'] is defined and inventory_hostname == groups['ceilometer_api'][0]
-    # ceilometer_central_container is the new ceilometer container. These inventory
-    # changes are going to be made in the integrated repo
     - groups['ceilometer_central_container'] is defined and inventory_hostname == groups['ceilometer_central_container'][0]
   tags:
     - ceilometer-config
