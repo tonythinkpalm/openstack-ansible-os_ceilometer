@@ -63,27 +63,3 @@
   until: add_admin_role|success
   retries: 5
   delay: 10
-
-# Create an endpoint
-- name: Ensure ceilometer endpoint
-  keystone:
-    command: "ensure_endpoint"
-    endpoint: "{{ keystone_service_adminurl }}"
-    login_user: "{{ keystone_admin_user_name }}"
-    login_password: "{{ keystone_auth_admin_password }}"
-    login_project_name: "{{ keystone_admin_tenant_name }}"
-    region_name: "{{ ceilometer_service_region }}"
-    service_name: "{{ ceilometer_service_name }}"
-    service_type: "{{ ceilometer_service_type }}"
-    insecure: "{{ keystone_service_adminuri_insecure }}"
-    endpoint_list:
-      - url: "{{ ceilometer_service_publicurl }}"
-        interface: "public"
-      - url: "{{ ceilometer_service_adminurl }}"
-        interface: "admin"
-      - url: "{{ ceilometer_service_internalurl }}"
-        interface: "internal"
-  register: add_service
-  until: add_service|success
-  retries: 5
-  delay: 10
