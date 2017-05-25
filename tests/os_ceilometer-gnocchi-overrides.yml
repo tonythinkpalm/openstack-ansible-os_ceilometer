@@ -13,12 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ceilometer_service_publicuri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_host'] }}:8777"
-ceilometer_service_publicurl: "{{ ceilometer_service_publicuri }}"
-ceilometer_service_internaluri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_host'] }}:8777"
-ceilometer_service_internalurl: "{{ ceilometer_service_internaluri }}"
-ceilometer_service_adminuri: "http://{{ hostvars[groups['ceilometer_all'][0]]['ansible_host'] }}:8777"
-ceilometer_service_adminurl: "{{ ceilometer_service_adminuri }}"
 ceilometer_rabbitmq_userid: ceilometer
 ceilometer_rabbitmq_password: "{{ rabbitmq_password }}"
 ceilometer_rabbitmq_vhost: /ceilometer
