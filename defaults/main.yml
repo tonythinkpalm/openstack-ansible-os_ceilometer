@@ -130,9 +130,9 @@ ceilometer_requires_pip_packages:
 ceilometer_pip_packages:
   - ceilometer
   - ceilometermiddleware
+  - cryptography
   - gnocchiclient
   - libvirt-python
-  - pycrypto
   - PyMySQL
   - pymongo
   - python-ceilometerclient
