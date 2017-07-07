@@ -50,19 +50,11 @@
         name: pymongo
       when: ansible_pkg_mgr == 'yum'
 
-    - name: Configure the MongoDB bind address
-      lineinfile:
+    - name: Configure the MongoDB
+      template:
+        src: "mongodb.conf.j2"
         dest: "{{ mongodb_config_file }}"
-        regexp: "^(#)?bind_ip"
-        line: "bind_ip = {{ ansible_host }}"
-      register: mongodb_bind
-
-    - name: Enable the MongoDB smallfiles option
-      lineinfile:
-        dest: "{{ mongodb_config_file }}"
-        regexp: "^(#)?smallfiles"
-        line: "smallfiles = true"
-      register: mongodb_smallfiles
+      register: mongodb_configured
 
     - name: Restart mongodb
       service:
@@ -70,7 +62,7 @@
         state: restarted
         enabled: yes
       when:
-        - mongodb_bind | changed or mongodb_smallfiles | changed
+        - mongodb_configured | changed
       register: mongodb_restart
 
     - name: Wait for mongodb to come back online after the restart
