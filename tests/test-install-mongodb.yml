@@ -95,7 +95,6 @@
         password: "{{ ceilometer_container_db_password }}"
         roles: 'root'
         state: present
-      failed_when: false
 
     - name: Add ceilometer database user
       mongodb_user:
