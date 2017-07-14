@@ -17,7 +17,7 @@ The Telemetry module (ceilometer) performs the following functions:
    As of Liberty, the alarming functionality is in a separate component.
    The metering-alarm containers handle the functionality through aodh
    services. For configuring these services, see the aodh docs:
-   http://docs.openstack.org/developer/aodh/
+   https://docs.openstack.org/aodh/latest/
 
 Configure a MongoDB backend prior to running the ceilometer playbooks.
 The connection data is in the ``user_variables.yml`` file
