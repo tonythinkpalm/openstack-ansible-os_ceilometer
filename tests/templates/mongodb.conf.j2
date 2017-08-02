@@ -27,7 +27,7 @@ unixSocketPrefix = /var/run/mongodb
 {% endif %}
 
 # Log file to send write to instead of stdout - has to be a file, not directory
-logpath = /var/log/mongodb/{{ (ansible_pkg_mgr == 'yum') | ternary ('mongod.conf', 'mongodb.conf') }}
+logpath = /var/log/mongodb/{{ (ansible_pkg_mgr in ['yum', 'dnf']) | ternary ('mongod.conf', 'mongodb.conf') }}
 
 # Directory for datafiles (defaults to /data/db/)
 dbpath = /var/lib/mongodb
