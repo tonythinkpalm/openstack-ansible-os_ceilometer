@@ -54,13 +54,13 @@
       package:
         state: present
         name: mongodb
-      when: ansible_pkg_mgr in ['yum', 'zypper']
+      when: ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
 
     - name: Install pip package (rpm)
       pip:
         state: latest
         name: pymongo
-      when: ansible_pkg_mgr in ['yum', 'zypper']
+      when: ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
 
     - name: Configure the MongoDB
       template:
