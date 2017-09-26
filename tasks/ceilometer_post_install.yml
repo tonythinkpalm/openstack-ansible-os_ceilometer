@@ -85,7 +85,7 @@
     - dest: "/etc/ceilometer/policy.json-{{ ceilometer_venv_tag }}"
       config_overrides: "{{ ceilometer_policy_overrides }}"
       config_type: "json"
-      content: "{{ ceilometer_policy_user_content | default(ceilometer_policy_default_content, true) }}"
+      content: "{{ ceilometer_policy_user_content | default(ceilometer_policy_default_content, true) | to_nice_json }}"
     - dest: "/etc/ceilometer/polling.yaml"
       config_overrides: "{{ ceilometer_polling_yaml_overrides }}"
       config_type: "yaml"
