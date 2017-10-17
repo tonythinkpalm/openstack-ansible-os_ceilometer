@@ -19,7 +19,6 @@
     return_content: yes
   with_items:
     - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_api_paste_git_file_path }}"
-    - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_gnocchi_resources_git_file_path }}"
     - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_loadbalancer_v2_meter_definitions_git_file_path }}"
     - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_osprofiler_event_definitions_git_file_path }}"
     - "{{ ceilometer_git_config_lookup_location }}/{{ ceilometer_policy_git_file_path }}"
@@ -57,11 +56,6 @@
       config_overrides: "{{ ceilometer_api_paste_ini_overrides }}"
       config_type: "ini"
       content: "{{ ceilometer_api_paste_user_content | default(ceilometer_api_paste_default_content, true) }}"
-    - dest: "/etc/ceilometer/gnocchi_resources.yaml"
-      config_overrides: "{{ ceilometer_gnocchi_resources_yaml_overrides }}"
-      config_type: "yaml"
-      list_extend: false
-      content: "{{ ceilometer_gnocchi_resources_user_content | default(ceilometer_gnocchi_resources_default_content, true) }}"
     - dest: "/etc/ceilometer/loadbalancer_v2_meter_definitions.yaml"
       config_overrides: "{{ ceilometer_loadbalancer_v2_meter_definitions_yaml_overrides }}"
       config_type: "yaml"
