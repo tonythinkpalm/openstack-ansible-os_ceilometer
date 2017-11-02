@@ -25,7 +25,7 @@ ceilometer_developer_mode: false
 
 ## The git source/branch
 ceilometer_git_repo: https://git.openstack.org/openstack/ceilometer
-ceilometer_git_install_branch: stable/newton
+ceilometer_git_install_branch: newton-eol
 
 ## The packages to build from source (used in developer mode)
 ceilometer_developer_constraints:
