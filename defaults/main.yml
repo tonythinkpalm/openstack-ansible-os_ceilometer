@@ -84,6 +84,7 @@ ceilometer_service_user_name: ceilometer
 ceilometer_service_project_name: service
 ceilometer_service_project_domain_id: default
 ceilometer_service_user_domain_id: default
+ceilometer_service_interface: internalURL
 
 ceilometer_service_in_ldap: false
 
