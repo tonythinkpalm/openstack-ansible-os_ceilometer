@@ -124,7 +124,6 @@ ceilometer_requires_pip_packages:
   - httplib2
   - python-keystoneclient # Keystoneclient needed to OSA keystone lib
   - virtualenv
-  - virtualenv-tools
 
 # Common pip packages
 ceilometer_pip_packages:
