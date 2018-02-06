@@ -38,6 +38,7 @@
     system: "yes"
     createhome: "yes"
     home: "{{ swift_system_home_folder }}"
+  when: swift_ceilometer_enabled | bool
 
 - name: Create ceilometer dir
   file:
