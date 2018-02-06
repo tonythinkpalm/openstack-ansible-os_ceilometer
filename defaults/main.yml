@@ -175,32 +175,26 @@ ceilometer_role_project_group: ceilometer_all
 # template engine and copied to the target host. If they do
 # not exist then the default files will be sourced from the
 # service git repository.
-ceilometer_api_paste_default_file_path: "/etc/openstack_deploy/ceilometer/api_paste.ini"
 ceilometer_gnocchi_resources_default_file_path: "/etc/openstack_deploy/ceilometer/gnocchi_resources.yaml"
 ceilometer_loadbalancer_v2_meter_definitions_default_file_path: "/etc/openstack_deploy/ceilometer/loadbalancer_v2_meter_definitions.yaml"
 ceilometer_osprofiler_event_definitions_default_file_path: "/etc/openstack_deploy/ceilometer/osprofiler_event_definitions.yaml"
-ceilometer_policy_default_file_path: "/etc/openstack_deploy/ceilometer/policy.json"
 ceilometer_polling_default_file_path: "/etc/openstack_deploy/ceilometer/polling.yaml"
 
 # If the above-mentioned files do not exist, then these
 # paths will be used to find the files from the git config
 # lookup location.
 ceilometer_git_config_lookup_location: https://git.openstack.org/cgit/openstack/ceilometer/plain
-ceilometer_api_paste_git_file_path: "etc/ceilometer/api_paste.ini?h={{ ceilometer_git_install_branch }}"
 ceilometer_gnocchi_resources_git_file_path: "ceilometer/dispatcher/data/gnocchi_resources.yaml?h={{ ceilometer_git_install_branch }}"
 ceilometer_loadbalancer_v2_meter_definitions_git_file_path: "etc/ceilometer/examples/loadbalancer_v2_meter_definitions.yaml?h={{ ceilometer_git_install_branch }}"
 ceilometer_osprofiler_event_definitions_git_file_path: "etc/ceilometer/examples/osprofiler_event_definitions.yaml?h={{ ceilometer_git_install_branch }}"
-ceilometer_policy_git_file_path: "etc/ceilometer/policy.json?h={{ ceilometer_git_install_branch }}"
 ceilometer_polling_git_file_path: "etc/ceilometer/polling.yaml?h={{ ceilometer_git_install_branch }}"
 
 ## Tunable var-based overrides
 # The contents of these are templated over the default files.
-ceilometer_api_paste_ini_overrides: {}
 ceilometer_ceilometer_conf_overrides: {}
 ceilometer_gnocchi_resources_yaml_overrides: {}
 ceilometer_loadbalancer_v2_meter_definitions_yaml_overrides: {}
 ceilometer_osprofiler_event_definitions_yaml_overrides: {}
 ceilometer_pipeline_yaml_overrides: {}
-ceilometer_policy_overrides: {}
 ceilometer_polling_yaml_overrides: {}
 ceilometer_rootwrap_conf_overrides: {}

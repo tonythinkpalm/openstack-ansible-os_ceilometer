@@ -22,9 +22,6 @@ event_dispatchers = database
 polling_namespaces = central
 {% endif %}
 
-[oslo_policy]
-policy_file = /etc/ceilometer/policy.json
-
 [oslo_messaging_rabbit]
 ssl = {{ ceilometer_rabbitmq_use_ssl }}
 

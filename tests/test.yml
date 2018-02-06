@@ -25,9 +25,6 @@
 # Needed in order to run Ceilometer Tempest test
 - include: common/test-install-glance.yml
 
-# Ceilometer metric data backend
-- include: test-install-mongodb.yml
-
 - include: test-install-ceilometer.yml
 
 # Install and execute Tempest
