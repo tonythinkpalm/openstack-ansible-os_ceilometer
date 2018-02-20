@@ -58,7 +58,7 @@
 
     - name: Install pip package (rpm)
       pip:
-        state: latest
+        state: present
         name: pymongo
       when: ansible_pkg_mgr in ['yum', 'dnf', 'zypper']
 
