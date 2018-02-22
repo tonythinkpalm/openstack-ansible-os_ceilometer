@@ -135,7 +135,8 @@ ceilometer_disk_source_sample_interval: "{{ ceilometer_sample_interval }}"
 ceilometer_network_source_sample_interval: "{{ ceilometer_sample_interval }}"
 
 ## Keystone authentication middleware
-ceilometer_keystone_auth_plugin: password
+ceilometer_keystone_auth_plugin: "{{ ceilometer_keystone_auth_type }}"
+ceilometer_keystone_auth_type: password
 
 # ceilometer packages that must be installed before anything else
 ceilometer_requires_pip_packages:
