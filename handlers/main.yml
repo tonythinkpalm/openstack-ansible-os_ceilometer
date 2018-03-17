@@ -13,12 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: Restart ceilometer services
-  command: "/bin/true"
-  notify:
-    - Stop services
-    - Start services
-
 - name: Stop services
   service:
     name: "{{ item.0.service_name }}"
@@ -33,6 +27,7 @@
   until: _stop | success
   retries: 5
   delay: 2
+  listen: Restart ceilometer services
 
 - name: Start services
   service:
@@ -48,3 +43,4 @@
   until: _start | success
   retries: 5
   delay: 2
+  listen: Restart ceilometer services
