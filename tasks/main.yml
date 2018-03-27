@@ -44,7 +44,29 @@
   tags:
     - ceilometer-config
 
-- include: "ceilometer_init_{{ ansible_service_mgr }}.yml"
+- name: Run the systemd service role
+  include_role:
+    name: systemd_service
+    private: true
+  vars:
+    systemd_user_name: "{{ ceilometer_system_user_name }}"
+    systemd_group_name: "{{ ceilometer_system_group_name }}"
+    systemd_tempd_prefix: openstack
+    systemd_slice_name: ceilometer
+    system_lock_path: /var/lock/ceilometer
+    systemd_CPUAccounting: true
+    systemd_BlockIOAccounting: true
+    systemd_MemoryAccounting: true
+    systemd_TasksAccounting: true
+    systemd_services:
+      - service_name: "{{ service_var.service_name }}"
+        enabled: yes
+        state: started
+        execstarts: "{{ service_var.execstarts }}"
+        config_overrides: "{{ service_var.init_config_overrides }}"
+  with_items: "{{ ceilometer_services.values() | list }}"
+  loop_control:
+    loop_var: service_var
   tags:
     - ceilometer-config
 
