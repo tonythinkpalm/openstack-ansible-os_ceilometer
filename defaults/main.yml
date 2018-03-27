@@ -40,8 +40,19 @@ ceilometer_git_install_branch: master
 ceilometer_developer_constraints:
   - "git+{{ ceilometer_git_repo }}@{{ ceilometer_git_install_branch }}#egg=ceilometer"
 
+# TODO(odyssey4me):
+# This can be simplified once all the roles are using
+# python_venv_build. We can then switch to using a
+# set of constraints in pip.conf inside the venv,
+# perhaps prepared by giving a giving a list of
+# constraints to the role.
+ceilometer_pip_install_args: >-
+  {{ ceilometer_developer_mode | ternary(pip_install_developer_constraints | default('--constraint /opt/developer-pip-constraints.txt'), '') }}
+  {{ (pip_install_upper_constraints is defined) | ternary('--constraint ' + pip_install_upper_constraints | default(''), '') }}
+  {{ pip_install_options | default('') }}
+
 # Name of the virtual env to deploy into
-ceilometer_venv_tag: untagged
+ceilometer_venv_tag: "{{ venv_tag | default('untagged') }}"
 ceilometer_bin: "{{ _ceilometer_bin }}"
 
 # venv_download, even when true, will use the fallback method of building the
