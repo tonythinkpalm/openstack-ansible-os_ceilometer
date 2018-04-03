@@ -115,7 +115,7 @@ max_retries = 80
 
 [keystone_authtoken]
 insecure = {{ keystone_service_internaluri_insecure | bool }}
-auth_uri = {{ keystone_service_internaluri }}
+www_authenticate_uri = {{ keystone_service_internaluri }}
 auth_url = {{ keystone_service_adminuri }}
 auth_type = {{ ceilometer_keystone_auth_plugin }}
 project_domain_id = {{ ceilometer_service_project_domain_id }}
