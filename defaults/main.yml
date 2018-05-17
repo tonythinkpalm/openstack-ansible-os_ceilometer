@@ -21,6 +21,9 @@ debug: False
 ceilometer_package_state: "latest"
 ceilometer_pip_package_state: "latest"
 
+# Set installation method.
+ceilometer_install_method: "source"
+
 ## Toggle developer mode
 ceilometer_developer_mode: false
 
@@ -34,7 +37,7 @@ ceilometer_developer_constraints:
 
 # Name of the virtual env to deploy into
 ceilometer_venv_tag: untagged
-ceilometer_bin: "/openstack/venvs/ceilometer-{{ ceilometer_venv_tag }}/bin"
+ceilometer_bin: "{{ _ceilometer_bin }}"
 
 # venv_download, even when true, will use the fallback method of building the
 # venv from scratch if the venv download fails.

@@ -19,6 +19,11 @@
         - openstack-ansible-functional-centos-7-nv
         - openstack-ansible-functional-opensuse-423-nv
         - openstack-ansible-functional-ubuntu-xenial
+        - openstack-ansible-functional-distro_install-ubuntu-xenial
+          # NOTE(hwoarang) Centos7 is having some troubles with repo dependencies
+          # so disabling until it's investigated.
+        - openstack-ansible-functional-distro_install-centos-7-nv
+        - openstack-ansible-functional-distro_install-opensuse-423
     experimental:
       jobs:
         - openstack-ansible-integrated-deploy-aio
@@ -26,3 +31,5 @@
       jobs:
         - openstack-ansible-linters
         - openstack-ansible-functional-ubuntu-xenial
+        - openstack-ansible-functional-distro_install-ubuntu-xenial
+        - openstack-ansible-functional-distro_install-opensuse-423

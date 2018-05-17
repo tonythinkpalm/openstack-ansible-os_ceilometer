@@ -1,5 +1,5 @@
 ---
-# Copyright 2014, Rackspace US, Inc.
+# Copyright 2018, SUSE LINUX GmbH.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,21 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ceilometer_distro_packages:
-  - git
-  - rpcbind
-  - rsync
-  - which
+ceilometer_package_list: "{{ ceilometer_distro_packages }}"
 
-ceilometer_service_distro_packages:
-  - openstack-ceilometer-central
-  - openstack-ceilometer-compute
-  - openstack-ceilometer-ipmi
-  - openstack-ceilometer-notification
-  - openstack-ceilometer-polling
-
-# Packages required in developer mode, where packages are built locally
-ceilometer_developer_mode_distro_packages:
-  - libvirt-devel
-  - libxml2-devel
-  - libxslt-devel
+_ceilometer_bin: "/openstack/venvs/ceilometer-{{ ceilometer_venv_tag }}/bin"

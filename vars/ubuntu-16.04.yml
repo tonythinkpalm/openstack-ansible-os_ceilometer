@@ -22,6 +22,11 @@ ceilometer_distro_packages:
   - rpcbind
   - rsync
 
+ceilometer_service_distro_packages:
+  - ceilometer-agent-central
+  - ceilometer-agent-compute
+  - ceilometer-polling
+
 # Packages required in developer mode, where packages are built locally
 ceilometer_developer_mode_distro_packages:
   - libvirt-dev
