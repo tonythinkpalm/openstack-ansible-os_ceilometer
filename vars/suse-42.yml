@@ -20,6 +20,14 @@ ceilometer_distro_packages:
   - rsync
   - which
 
+ceilometer_service_distro_packages:
+  - openstack-ceilometer
+  - openstack-ceilometer-agent-central
+  - openstack-ceilometer-agent-compute
+  - openstack-ceilometer-agent-ipmi
+  - openstack-ceilometer-agent-notification
+  - openstack-ceilometer-polling
+
 # Packages required in developer mode, where packages are built locally
 ceilometer_developer_mode_distro_packages:
   - libvirt-devel
