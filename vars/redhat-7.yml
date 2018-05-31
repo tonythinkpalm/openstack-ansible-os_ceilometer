@@ -15,6 +15,7 @@
 
 ceilometer_distro_packages:
   - git
+  - python-keystoneclient # Keystoneclient needed to OSA keystone lib
   - rpcbind
   - rsync
   - which

@@ -126,7 +126,6 @@ ceilometer_keystone_auth_type: password
 # ceilometer packages that must be installed before anything else
 ceilometer_requires_pip_packages:
   - httplib2
-  - python-keystoneclient # Keystoneclient needed to OSA keystone lib
   - virtualenv
 
 # Common pip packages
