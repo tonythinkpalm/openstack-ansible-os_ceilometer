@@ -50,3 +50,12 @@ This role supports two tags: ``ceilometer-install`` and ``ceilometer-config``.
 The ``ceilometer-install`` tag can be used to install and upgrade.
 
 The ``ceilometer-config`` tag can be used to maintain configuration of the service.
+
+Documentation for the project can be found at:
+  https://docs.openstack.org/openstack-ansible-os_ceilometer/latest/
+
+Release notes for the project can be found at:
+  https://docs.openstack.org/releasenotes/openstack-ansible-os_ceilometer/
+
+The project home is at:
+  http://launchpad.net/openstack-ansible
