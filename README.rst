@@ -33,7 +33,7 @@ Example Playbook
 
 .. code-block:: yaml
 
-    - name: Install ceilometer server
+    - name: Install ceilometer service
       hosts: ceilometer_all
       user: root
       roles:
