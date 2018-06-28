@@ -95,12 +95,6 @@ messaging_urls = rabbit://{{ sahara_rabbitmq_telemetry_userid }}:{{ sahara_rabbi
 {% endfor %}
 {% endif %}
 
-{% if ceilometer_db_type | length > 0 %}
-[database]
-metering_connection = {{ ceilometer_connection_string }}
-event_connection = {{ ceilometer_connection_string }}
-{% endif %}
-
 {% if ceilometer_gnocchi_enabled | bool %}
 [dispatcher_gnocchi]
 archive_policy = low
