@@ -84,6 +84,7 @@
     loop_var: service_var
   tags:
     - ceilometer-config
+    - systemd-service
 
 - include: ceilometer_service_setup.yml
   when:
