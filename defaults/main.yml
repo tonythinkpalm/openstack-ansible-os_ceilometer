@@ -57,17 +57,25 @@ ceilometer_system_shell: /bin/false
 ceilometer_system_comment: ceilometer system user
 ceilometer_system_user_home: "/var/lib/{{ ceilometer_system_user_name }}"
 
-## RabbitMQ info
+## Oslo Messaging info
 
-## Configuration for RPC communications
-ceilometer_rabbitmq_userid: ceilometer
-ceilometer_rabbitmq_vhost: /ceilometer
-ceilometer_rabbitmq_port: 5672
-# Comma separated list of hosts
-ceilometer_rabbitmq_servers: 127.0.0.1
-ceilometer_rabbitmq_use_ssl: False
-# Inventory group containing the hosts for the cluster
-ceilometer_rabbitmq_host_group: "rabbitmq_all"
+# RPC
+ceilometer_oslomsg_rpc_transport: rabbit
+ceilometer_oslomsg_rpc_servers: 127.0.0.1
+ceilometer_oslomsg_rpc_port: 5672
+ceilometer_oslomsg_rpc_use_ssl: False
+ceilometer_oslomsg_rpc_userid: ceilometer
+ceilometer_oslomsg_rpc_vhost: /ceilometer
+ceilometer_oslomsg_rpc_host_group: "oslomsg_rpc_all"
+
+# Notify
+ceilometer_oslomsg_notify_transport: rabbit
+ceilometer_oslomsg_notify_servers: 127.0.0.1
+ceilometer_oslomsg_notify_port: 5672
+ceilometer_oslomsg_notify_use_ssl: False
+ceilometer_oslomsg_notify_userid: ceilometer
+ceilometer_oslomsg_notify_vhost: /ceilometer
+ceilometer_oslomsg_notify_host_group: "oslomsg_notify_all"
 
 #Ceilometer services info
 ceilometer_role_name: admin
@@ -151,7 +159,8 @@ ceilometer_services:
 ceilometer_required_secrets:
   - memcached_encryption_key
   - ceilometer_telemetry_secret
-  - ceilometer_rabbitmq_password
+  - ceilometer_oslomsg_rpc_password
+  - ceilometer_oslomsg_notify_password
   - ceilometer_service_password
 
 # This variable is used by the repo_build process to determine
