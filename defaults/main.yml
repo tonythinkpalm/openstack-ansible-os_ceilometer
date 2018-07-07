@@ -16,6 +16,11 @@
 ## Verbosity Options
 debug: False
 
+# Set the host which will execute the shade modules
+# for the service setup. The host must already have
+# clouds.yaml properly configured.
+glance_service_setup_host: "{{ openstack_service_setup_host | default('localhost') }}"
+
 # Set the package install state for distribution and pip packages
 # Options are 'present' and 'latest'
 ceilometer_package_state: "latest"
@@ -69,11 +74,6 @@ ceilometer_role_name: admin
 
 ## Service Type and Data
 ceilometer_service_region: RegionOne
-ceilometer_service_name: ceilometer
-ceilometer_service_port: 8777
-ceilometer_service_proto: http
-ceilometer_service_type: metering
-ceilometer_service_description: "Ceilometer Service"
 ceilometer_service_user_name: ceilometer
 ceilometer_service_project_name: service
 ceilometer_service_project_domain_id: default
@@ -113,11 +113,6 @@ ceilometer_network_source_sample_interval: "{{ ceilometer_sample_interval }}"
 ## Keystone authentication middleware
 ceilometer_keystone_auth_plugin: "{{ ceilometer_keystone_auth_type }}"
 ceilometer_keystone_auth_type: password
-
-# ceilometer packages that must be installed before anything else
-ceilometer_requires_pip_packages:
-  - httplib2
-  - virtualenv
 
 # Common pip packages
 ceilometer_pip_packages:
