@@ -92,6 +92,23 @@
   tags:
     - ceilometer-config
 
+- include_tasks: mq_setup.yml
+  run_once: yes
+  with_items:
+    - oslomsg_setup_host: "{{ ceilometer_oslomsg_rpc_setup_host }}"
+      oslomsg_userid: "{{ ceilometer_oslomsg_rpc_userid }}"
+      oslomsg_password: "{{ ceilometer_oslomsg_rpc_password }}"
+      oslomsg_vhost: "{{ ceilometer_oslomsg_rpc_vhost }}"
+      oslomsg_transport: "{{ ceilometer_oslomsg_rpc_transport }}"
+    - oslomsg_setup_host: "{{ ceilometer_oslomsg_notify_setup_host }}"
+      oslomsg_userid: "{{ ceilometer_oslomsg_notify_userid }}"
+      oslomsg_password: "{{ ceilometer_oslomsg_notify_password }}"
+      oslomsg_vhost: "{{ ceilometer_oslomsg_notify_vhost }}"
+      oslomsg_transport: "{{ ceilometer_oslomsg_notify_transport }}"
+  no_log: true
+  tags:
+    - ceilometer-config
+
 - include: ceilometer_db_setup.yml
   tags:
     - ceilometer-config
