@@ -47,15 +47,15 @@
   tags:
     - always
 
-- include: ceilometer_pre_install.yml
+- include_tasks: ceilometer_pre_install.yml
   tags:
     - ceilometer-install
 
-- include: ceilometer_install.yml
+- include_tasks: ceilometer_install.yml
   tags:
     - ceilometer-install
 
-- include: ceilometer_post_install.yml
+- include_tasks: ceilometer_post_install.yml
   tags:
     - ceilometer-config
 
@@ -86,7 +86,7 @@
     - ceilometer-config
     - systemd-service
 
-- include: ceilometer_service_setup.yml
+- include_tasks: ceilometer_service_setup.yml
   when:
     - groups['ceilometer_central_container'] is defined and inventory_hostname == groups['ceilometer_central_container'][0]
   tags:
@@ -109,7 +109,7 @@
     - common-mq
     - ceilometer-config
 
-- include: ceilometer_db_setup.yml
+- include_tasks: ceilometer_db_setup.yml
   tags:
     - ceilometer-config
   run_once: true
