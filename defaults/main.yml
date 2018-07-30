@@ -75,8 +75,9 @@ ceilometer_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rab
 ceilometer_oslomsg_notify_servers: "{{ oslomsg_notify_servers | default('127.0.0.1') }}"
 ceilometer_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
 ceilometer_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
-ceilometer_oslomsg_notify_userid: ceilometer
-ceilometer_oslomsg_notify_vhost: /ceilometer
+ceilometer_oslomsg_notify_userid: "{{ ceilometer_oslomsg_rpc_userid }}"
+ceilometer_oslomsg_notify_password: "{{ ceilometer_oslomsg_rpc_password }}"
+ceilometer_oslomsg_notify_vhost: "{{ ceilometer_oslomsg_rpc_vhost }}"
 ceilometer_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
 
 #Ceilometer services info
