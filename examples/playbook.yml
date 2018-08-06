@@ -1,3 +1,4 @@
+---
 - name: Install ceilometer server
   hosts: ceilometer_all
   user: root
