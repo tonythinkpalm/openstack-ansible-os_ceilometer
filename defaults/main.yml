@@ -144,6 +144,8 @@ ceilometer_pip_packages:
   - systemd-python
   - tooz
   - warlock
+  - kazoo
+  - redis
 
 ceilometer_optional_oslomsg_amqp1_pip_packages:
   - oslo.messaging[amqp1]
