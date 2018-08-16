@@ -35,3 +35,7 @@ ceilometer_developer_mode_distro_packages:
   - libxml2-dev
   - libxslt1-dev
   - pkg-config
+
+ceilometer_oslomsg_amqp1_distro_packages:
+  - libsasl2-modules
+  - sasl2-bin
