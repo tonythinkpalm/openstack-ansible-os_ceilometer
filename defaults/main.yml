@@ -153,7 +153,7 @@ ceilometer_pip_packages:
   - python-ceilometerclient
   - python-memcached
   - systemd-python
-  - tooz
+  - tooz[zake]
   - warlock
   - kazoo
   - redis
