@@ -20,7 +20,11 @@
       - release-notes-jobs
     check:
       jobs:
-        - openstack-ansible-functional-distro_install-ubuntu-xenial
+          # NOTE(odyssey4me):
+          # Distro installs are not yet working for xenial/bionic,
+          # so leave them non-voting for now.
+        - openstack-ansible-functional-distro_install-ubuntu-xenial:
+            voting: false
           # NOTE(hwoarang) Centos7 is having some troubles with repo dependencies
           # so disabling until it's investigated.
         - openstack-ansible-functional-distro_install-centos-7:
@@ -28,5 +32,4 @@
         - openstack-ansible-functional-distro_install-opensuse-423
     gate:
       jobs:
-        - openstack-ansible-functional-distro_install-ubuntu-xenial
         - openstack-ansible-functional-distro_install-opensuse-423

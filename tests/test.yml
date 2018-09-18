@@ -26,6 +26,3 @@
 - include: common/test-install-glance.yml
 
 - include: test-install-ceilometer.yml
-
-# Install and execute Tempest
-- include: common/test-install-tempest.yml
