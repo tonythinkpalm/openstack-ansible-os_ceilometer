@@ -26,6 +26,3 @@
 - import_playbook: common/test-install-glance.yml
 
 - import_playbook: test-install-ceilometer.yml
-
-# Install and execute Tempest
-- import_playbook: common/test-install-tempest.yml
