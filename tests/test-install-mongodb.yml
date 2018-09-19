@@ -99,6 +99,7 @@
         password: "{{ ceilometer_container_db_password }}"
         roles: 'root'
         state: present
+      no_log: yes
 
     - name: Add ceilometer database user
       mongodb_user:
@@ -110,6 +111,7 @@
         password: "{{ ceilometer_container_db_password }}"
         roles: 'readWrite,dbAdmin'
         state: present
+      no_log: yes
   vars:
     packages_mongodb:
       - mongodb-server
