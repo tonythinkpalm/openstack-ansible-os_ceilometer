@@ -29,6 +29,3 @@
 - include: test-install-mongodb.yml
 
 - include: test-install-ceilometer.yml
-
-# Install and execute Tempest
-- include: common/test-install-tempest.yml

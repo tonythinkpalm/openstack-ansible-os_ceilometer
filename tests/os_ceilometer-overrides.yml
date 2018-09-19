@@ -45,15 +45,3 @@ swift_system_user_name: swift
 swift_system_shell: /bin/false
 swift_system_comment: swift test user
 swift_system_home_folder: "/var/lib/{{ swift_system_user_name }}"
-
-tempest_run: yes
-tempest_venv_tag: "{{ tempest_git_install_branch }}"
-tempest_venv_bin: "/opt/tempest_{{ tempest_venv_tag }}/bin"
-
-tempest_plugins:
-  - name: tempest-ceilometer
-    repo: https://git.openstack.org/openstack/ceilometer
-    branch: stable/ocata
-
-tempest_test_whitelist:
-  - ceilometer.tests.tempest.api.test_telemetry_notification_api
