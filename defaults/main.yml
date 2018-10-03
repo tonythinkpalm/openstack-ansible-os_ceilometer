@@ -60,25 +60,94 @@ ceilometer_system_user_home: "/var/lib/{{ ceilometer_system_user_name }}"
 ## Oslo Messaging info
 
 # RPC
+ceilometer_oslomsg_rpc_host_group: "{{ oslomsg_rpc_host_group | default('rabbitmq_all') }}"
 ceilometer_oslomsg_rpc_setup_host: "{{ (ceilometer_oslomsg_rpc_host_group in groups) | ternary(groups[ceilometer_oslomsg_rpc_host_group][0], 'localhost') }}"
 ceilometer_oslomsg_rpc_transport: "{{ oslomsg_rpc_transport | default('rabbit') }}"
-ceilometer_oslomsg_rpc_servers: "{{ oslomsg_rpc_servers | default('127.0.0.1') }}"
 ceilometer_oslomsg_rpc_port: "{{ oslomsg_rpc_port | default('5672') }}"
 ceilometer_oslomsg_rpc_use_ssl: "{{ oslomsg_rpc_use_ssl | default(False) }}"
 ceilometer_oslomsg_rpc_userid: ceilometer
 ceilometer_oslomsg_rpc_vhost: /ceilometer
-ceilometer_oslomsg_rpc_host_group: "{{ oslomsg_rpc_host_group | default('rabbitmq_all') }}"
 
 # Notify
+ceilometer_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
 ceilometer_oslomsg_notify_setup_host: "{{ (ceilometer_oslomsg_notify_host_group in groups) | ternary(groups[ceilometer_oslomsg_notify_host_group][0], 'localhost') }}"
 ceilometer_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
-ceilometer_oslomsg_notify_servers: "{{ oslomsg_notify_servers | default('127.0.0.1') }}"
 ceilometer_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
 ceilometer_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
 ceilometer_oslomsg_notify_userid: "{{ ceilometer_oslomsg_rpc_userid }}"
 ceilometer_oslomsg_notify_password: "{{ ceilometer_oslomsg_rpc_password }}"
 ceilometer_oslomsg_notify_vhost: "{{ ceilometer_oslomsg_rpc_vhost }}"
-ceilometer_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+
+# Glance notifications
+glance_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+glance_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+glance_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+glance_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+glance_oslomsg_notify_userid: "{{ glance_oslomsg_rpc_userid | default('glance') }}"
+glance_oslomsg_notify_password: "{{ glance_ceilometer_enabled | ternary(glance_oslomsg_rpc_password, '') }}"
+glance_oslomsg_notify_vhost: "{{ glance_oslomsg_rpc_vhost | default('/glance') }}"
+
+# Nova notifications
+nova_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+nova_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+nova_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+nova_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+nova_oslomsg_notify_userid: "{{ nova_oslomsg_rpc_userid | default('nova') }}"
+nova_oslomsg_notify_password: "{{ nova_ceilometer_enabled | ternary(nova_oslomsg_rpc_password, '') }}"
+nova_oslomsg_notify_vhost: "{{ nova_oslomsg_rpc_vhost | default('/nova') }}"
+
+# Cinder notifications
+cinder_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+cinder_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+cinder_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+cinder_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+cinder_oslomsg_notify_userid: "{{ cinder_oslomsg_rpc_userid | default('cinder') }}"
+cinder_oslomsg_notify_password: "{{ cinder_ceilometer_enabled | ternary(cinder_oslomsg_rpc_password, '') }}"
+cinder_oslomsg_notify_vhost: "{{ cinder_oslomsg_rpc_vhost | default('/cinder') }}"
+
+# Neutron notifications
+neutron_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+neutron_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+neutron_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+neutron_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+neutron_oslomsg_notify_userid: "{{ neutron_oslomsg_rpc_userid | default('neutron') }}"
+neutron_oslomsg_notify_password: "{{ neutron_ceilometer_enabled | ternary(neutron_oslomsg_rpc_password, '') }}"
+neutron_oslomsg_notify_vhost: "{{ neutron_oslomsg_rpc_vhost | default('/neutron') }}"
+
+# Heat notifications
+heat_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+heat_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+heat_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+heat_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+heat_oslomsg_notify_userid: "{{ heat_oslomsg_rpc_userid | default('heat') }}"
+heat_oslomsg_notify_password: "{{ heat_ceilometer_enabled | ternary(heat_oslomsg_rpc_password, '') }}"
+heat_oslomsg_notify_vhost: "{{ heat_oslomsg_rpc_vhost | default('/heat') }}"
+
+# Keystone notifications
+keystone_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+keystone_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+keystone_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+keystone_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+keystone_oslomsg_notify_userid: "{{ keystone_oslomsg_rpc_userid | default('keystone') }}"
+keystone_oslomsg_notify_password: "{{ keystone_ceilometer_enabled | ternary(keystone_oslomsg_rpc_password, '') }}"
+keystone_oslomsg_notify_vhost: "{{ keystone_oslomsg_rpc_vhost | default('/keystone') }}"
+
+# Swift notifications
+swift_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+swift_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+swift_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+swift_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+swift_oslomsg_notify_userid: "swift"
+swift_oslomsg_notify_vhost: "/swift"
+
+# Sahara notifications
+sahara_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+sahara_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+sahara_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+sahara_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+sahara_oslomsg_notify_userid: "{{ sahara_oslomsg_rpc_userid | default('sahara') }}"
+sahara_oslomsg_notify_password: "{{ sahara_ceilometer_enabled | ternary(sahara_oslomsg_rpc_password, '') }}"
+sahara_oslomsg_notify_vhost: "{{ sahara_oslomsg_rpc_vhost | default('/sahara') }}"
 
 ## (Qdrouterd) info
 # TODO(ansmith): Change structure when more backends will be supported
