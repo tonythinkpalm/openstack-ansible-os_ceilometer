@@ -1,13 +1,8 @@
 #{{ ansible_managed}}
-{% macro _oslomsg_url(transport, userid, password, hosts, port, vhost, query='', ip_from_hostnames=true) %}
+{% macro _oslomsg_url(transport, userid, password, hosts, port, vhost, query='') %}
 {% set _url = [] %}
 {% for host in hosts %}
-{%   if ip_from_hostnames %}
-{%     set host_address = hostvars[host]['ansible_host'] %}
-{%   else %}
-{%     set host_address = host %}
-{%   endif %}
-{%   set _ = _url.append(userid + ':' + password + '@' + host_address + ':' + port) %}
+{%   set _ = _url.append(userid + ':' + password + '@' + hostvars[host]['ansible_host'] + ':' + port) %}
 {% endfor %}
 {{ transport }}://{{ _url | join(',') }}/{{ vhost }}?{{ query }}
 {% endmacro %}
@@ -21,7 +16,7 @@ auth_strategy = keystone
 aodh_is_enabled = {{ ceilometer_aodh_enabled | bool }}
 
 # RPC
-transport_url = {{ _oslomsg_url(ceilometer_oslomsg_rpc_transport, ceilometer_oslomsg_rpc_userid, ceilometer_oslomsg_rpc_password, ceilometer_oslomsg_rpc_servers.split(','), ceilometer_oslomsg_rpc_port, ceilometer_oslomsg_rpc_vhost, ip_from_hostnames=false, query=(ceilometer_oslomsg_rpc_use_ssl | bool | ternary('ssl=1', ''))) }}
+transport_url = {{ _oslomsg_url(ceilometer_oslomsg_rpc_transport, ceilometer_oslomsg_rpc_userid, ceilometer_oslomsg_rpc_password, groups[ceilometer_oslomsg_rpc_host_group], ceilometer_oslomsg_rpc_port, ceilometer_oslomsg_rpc_vhost, query=(ceilometer_oslomsg_rpc_use_ssl | bool | ternary('ssl=1', ''))) }}
 
 {% if ceilometer_gnocchi_enabled | bool %}
 event_dispatchers = gnocchi
@@ -49,46 +44,46 @@ store_events = {{ not ceilometer_gnocchi_enabled | bool }}
 # Notification queues to listen on
 
 # Ceilometer needs to connect to it's own notification vhost
-messaging_urls = {{ _oslomsg_url(ceilometer_oslomsg_notify_transport, ceilometer_oslomsg_notify_userid, ceilometer_oslomsg_notify_password, groups[ceilometer_oslomsg_notify_host_group], ceilometer_oslomsg_notify_port, ceilometer_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(ceilometer_oslomsg_notify_transport, ceilometer_oslomsg_notify_userid, ceilometer_oslomsg_notify_password, groups[ceilometer_oslomsg_notify_host_group], ceilometer_oslomsg_notify_port, ceilometer_oslomsg_notify_vhost, query=(ceilometer_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 
 {% if glance_ceilometer_enabled %}
 # Glance notifications
-messaging_urls = {{ _oslomsg_url(glance_oslomsg_notify_transport, glance_oslomsg_notify_userid, glance_oslomsg_notify_password, groups[glance_oslomsg_notify_host_group], glance_oslomsg_notify_port, glance_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(glance_oslomsg_notify_transport, glance_oslomsg_notify_userid, glance_oslomsg_notify_password, groups[glance_oslomsg_notify_host_group], glance_oslomsg_notify_port, glance_oslomsg_notify_vhost, query=(glance_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if nova_ceilometer_enabled %}
 # Nova notifications
-messaging_urls = {{ _oslomsg_url(nova_oslomsg_notify_transport, nova_oslomsg_notify_userid, nova_oslomsg_notify_password, groups[nova_oslomsg_notify_host_group], nova_oslomsg_notify_port, nova_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(nova_oslomsg_notify_transport, nova_oslomsg_notify_userid, nova_oslomsg_notify_password, groups[nova_oslomsg_notify_host_group], nova_oslomsg_notify_port, nova_oslomsg_notify_vhost, query=(nova_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if cinder_ceilometer_enabled %}
 # Cinder notifications
-messaging_urls = {{ _oslomsg_url(cinder_oslomsg_notify_transport, cinder_oslomsg_notify_userid, cinder_oslomsg_notify_password, groups[cinder_oslomsg_notify_host_group], cinder_oslomsg_notify_port, cinder_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(cinder_oslomsg_notify_transport, cinder_oslomsg_notify_userid, cinder_oslomsg_notify_password, groups[cinder_oslomsg_notify_host_group], cinder_oslomsg_notify_port, cinder_oslomsg_notify_vhost, query=(cinder_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if neutron_ceilometer_enabled %}
 # Neutron notifications
-messaging_urls = {{ _oslomsg_url(neutron_oslomsg_notify_transport, neutron_oslomsg_notify_userid, neutron_oslomsg_notify_password, groups[neutron_oslomsg_notify_host_group], neutron_oslomsg_notify_port, neutron_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(neutron_oslomsg_notify_transport, neutron_oslomsg_notify_userid, neutron_oslomsg_notify_password, groups[neutron_oslomsg_notify_host_group], neutron_oslomsg_notify_port, neutron_oslomsg_notify_vhost, query=(neutron_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if heat_ceilometer_enabled %}
 # Heat notifications
-messaging_urls = {{ _oslomsg_url(heat_oslomsg_notify_transport, heat_oslomsg_notify_userid, heat_oslomsg_notify_password, groups[heat_oslomsg_notify_host_group], heat_oslomsg_notify_port, heat_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(heat_oslomsg_notify_transport, heat_oslomsg_notify_userid, heat_oslomsg_notify_password, groups[heat_oslomsg_notify_host_group], heat_oslomsg_notify_port, heat_oslomsg_notify_vhost, query=(heat_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if keystone_ceilometer_enabled %}
 # Keystone notifications
-messaging_urls = {{ _oslomsg_url(keystone_oslomsg_notify_transport, keystone_oslomsg_notify_userid, keystone_oslomsg_notify_password, groups[keystone_oslomsg_notify_host_group], keystone_oslomsg_notify_port, keystone_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(keystone_oslomsg_notify_transport, keystone_oslomsg_notify_userid, keystone_oslomsg_notify_password, groups[keystone_oslomsg_notify_host_group], keystone_oslomsg_notify_port, keystone_oslomsg_notify_vhost, query=(keystone_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if swift_ceilometer_enabled %}
 # Ceilometer notifications
-messaging_urls = {{ _oslomsg_url(swift_oslomsg_notify_transport, swift_oslomsg_notify_userid, swift_oslomsg_notify_password, groups[swift_oslomsg_notify_host_group], swift_oslomsg_notify_port, swift_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(swift_oslomsg_notify_transport, swift_oslomsg_notify_userid, swift_oslomsg_notify_password, groups[swift_oslomsg_notify_host_group], swift_oslomsg_notify_port, swift_oslomsg_notify_vhost, query=(swift_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 
 {% if sahara_ceilometer_enabled %}
 # Sahara notifications
-messaging_urls = {{ _oslomsg_url(sahara_oslomsg_notify_transport, sahara_oslomsg_notify_userid, sahara_oslomsg_notify_password, groups[sahara_oslomsg_notify_host_group], sahara_oslomsg_notify_port, sahara_oslomsg_notify_vhost) }}
+messaging_urls = {{ _oslomsg_url(sahara_oslomsg_notify_transport, sahara_oslomsg_notify_userid, sahara_oslomsg_notify_password, groups[sahara_oslomsg_notify_host_group], sahara_oslomsg_notify_port, sahara_oslomsg_notify_vhost, query=(sahara_oslomsg_notify_use_ssl | bool | ternary('ssl=1', ''))) }}
 {% endif %}
 {% endif %}
 
