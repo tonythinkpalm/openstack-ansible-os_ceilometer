@@ -43,6 +43,9 @@ infra1
 glance_api
 glance_registry
 
+[ceilometer_central_container]
+openstack1
+
 [ceilometer_agent_central]
 openstack1
 

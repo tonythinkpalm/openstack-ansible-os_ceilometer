@@ -23,4 +23,6 @@
   become: yes
   become_user: "{{ ceilometer_system_user_name }}"
   changed_when: false
-  when: gnocchi_resource_file.stat.exists
+  when:
+    - gnocchi_resource_file.stat.exists
+    - ceilometer_gnocchi_enabled
