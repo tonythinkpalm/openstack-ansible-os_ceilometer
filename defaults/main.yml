@@ -238,14 +238,14 @@ ceilometer_services:
   ceilometer-agent-notification:
     group:
       - ceilometer_agent_notification
-    init_config_overrides: "{{ ceilometer_agent_init_overrides }}"
+    config_overrides: "{{ ceilometer_agent_init_overrides }}"
     service_name: ceilometer-agent-notification
     execstarts: "{{ ceilometer_bin }}/ceilometer-agent-notification"
   ceilometer-polling:
     group:
       - ceilometer_agent_central
       - ceilometer_agent_compute
-    init_config_overrides: "{{ ceilometer_polling_init_overrides }}"
+    config_overrides: "{{ ceilometer_polling_init_overrides }}"
     service_name: ceilometer-polling
     execstarts: "{{ ceilometer_bin }}/ceilometer-polling"
 

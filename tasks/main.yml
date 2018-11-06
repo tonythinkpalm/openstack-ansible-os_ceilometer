@@ -73,15 +73,16 @@
     systemd_BlockIOAccounting: true
     systemd_MemoryAccounting: true
     systemd_TasksAccounting: true
-    systemd_services:
-      - service_name: "{{ service_var.service_name }}"
-        enabled: yes
-        state: started
-        execstarts: "{{ service_var.execstarts }}"
-        config_overrides: "{{ service_var.init_config_overrides }}"
-  with_items: "{{ ceilometer_services.values() | list }}"
-  loop_control:
-    loop_var: service_var
+    systemd_services: |-
+      {% set services = [] %}
+      {% for service in ceilometer_services.values() %}
+      {%   if service.group | intersect(group_names) %}
+      {%     set _ = service.update({'enabled': 'yes', 'state': 'started'}) %}
+      {%     set _ = service.pop('group') %}
+      {%     set _ = services.append(service) %}
+      {%   endif %}
+      {% endfor %}
+      {{ services }}
   tags:
     - ceilometer-config
     - systemd-service
