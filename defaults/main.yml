@@ -201,16 +201,16 @@ ceilometer_notification_workers_max: 16
 ceilometer_notification_workers: "{{ [[ansible_processor_vcpus|default(2) // 2, 1] | max, ceilometer_notification_workers_max] | min }}"
 
 # Enable/Disable Ceilometer per service
-cinder_ceilometer_enabled: false
-designate_ceilometer_enabled: false
-glance_ceilometer_enabled: false
-heat_ceilometer_enabled: false
-keystone_ceilometer_enabled: false
-neutron_ceilometer_enabled: false
-nova_ceilometer_enabled: false
-sahara_ceilometer_enabled: false
-swift_ceilometer_enabled: false
-trove_ceilometer_enabled: false
+cinder_ceilometer_enabled: "{{ (groups['cinder_all'] is defined) and (groups['cinder_all'] | length > 0) }}"
+designate_ceilometer_enabled: "{{ (groups['designate_all'] is defined) and (groups['designate_all'] | length > 0) }}"
+glance_ceilometer_enabled: "{{ (groups['glance_all'] is defined) and (groups['glance_all'] | length > 0) }}"
+heat_ceilometer_enabled: "{{ (groups['heat_all'] is defined) and (groups['heat_all'] | length > 0) }}"
+keystone_ceilometer_enabled: "{{ (groups['keystone_all'] is defined) and (groups['keystone_all'] | length > 0) }}"
+neutron_ceilometer_enabled: "{{ (groups['neutron_all'] is defined) and (groups['neutron_all'] | length > 0) }}"
+nova_ceilometer_enabled: "{{ (groups['nova_all'] is defined) and (groups['nova_all'] | length > 0) }}"
+sahara_ceilometer_enabled: "{{ (groups['sahara_all'] is defined) and (groups['sahara_all'] | length > 0) }}"
+swift_ceilometer_enabled: "{{ (groups['swift_all'] is defined) and (groups['swift_all'] | length > 0) }}"
+trove_ceilometer_enabled: "{{ (groups['trove_all'] is defined) and (groups['trove_all'] | length > 0) }}"
 
 # Enable/Disable Telemetry partner services in Ceilometer
 # Defaults to True if the service is deployed.
