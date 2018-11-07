@@ -89,24 +89,6 @@ ceilometer_oslomsg_notify_userid: "{{ ceilometer_oslomsg_rpc_userid }}"
 ceilometer_oslomsg_notify_password: "{{ ceilometer_oslomsg_rpc_password }}"
 ceilometer_oslomsg_notify_vhost: "{{ ceilometer_oslomsg_rpc_vhost }}"
 
-# Glance notifications
-glance_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
-glance_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
-glance_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
-glance_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
-glance_oslomsg_notify_userid: "{{ glance_oslomsg_rpc_userid | default('glance') }}"
-glance_oslomsg_notify_password: "{{ glance_ceilometer_enabled | ternary(glance_oslomsg_rpc_password, '') }}"
-glance_oslomsg_notify_vhost: "{{ glance_oslomsg_rpc_vhost | default('/glance') }}"
-
-# Nova notifications
-nova_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
-nova_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
-nova_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
-nova_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
-nova_oslomsg_notify_userid: "{{ nova_oslomsg_rpc_userid | default('nova') }}"
-nova_oslomsg_notify_password: "{{ nova_ceilometer_enabled | ternary(nova_oslomsg_rpc_password, '') }}"
-nova_oslomsg_notify_vhost: "{{ nova_oslomsg_rpc_vhost | default('/nova') }}"
-
 # Cinder notifications
 cinder_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
 cinder_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
@@ -116,14 +98,23 @@ cinder_oslomsg_notify_userid: "{{ cinder_oslomsg_rpc_userid | default('cinder') 
 cinder_oslomsg_notify_password: "{{ cinder_ceilometer_enabled | ternary(cinder_oslomsg_rpc_password, '') }}"
 cinder_oslomsg_notify_vhost: "{{ cinder_oslomsg_rpc_vhost | default('/cinder') }}"
 
-# Neutron notifications
-neutron_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
-neutron_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
-neutron_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
-neutron_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
-neutron_oslomsg_notify_userid: "{{ neutron_oslomsg_rpc_userid | default('neutron') }}"
-neutron_oslomsg_notify_password: "{{ neutron_ceilometer_enabled | ternary(neutron_oslomsg_rpc_password, '') }}"
-neutron_oslomsg_notify_vhost: "{{ neutron_oslomsg_rpc_vhost | default('/neutron') }}"
+# Designate notifications
+designate_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+designate_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+designate_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+designate_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+designate_oslomsg_notify_userid: "{{ designate_oslomsg_rpc_userid | default('designate') }}"
+designate_oslomsg_notify_password: "{{ designate_ceilometer_enabled | ternary(designate_oslomsg_rpc_password, '') }}"
+designate_oslomsg_notify_vhost: "{{ designate_oslomsg_rpc_vhost | default('/designate') }}"
+
+# Glance notifications
+glance_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+glance_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+glance_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+glance_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+glance_oslomsg_notify_userid: "{{ glance_oslomsg_rpc_userid | default('glance') }}"
+glance_oslomsg_notify_password: "{{ glance_ceilometer_enabled | ternary(glance_oslomsg_rpc_password, '') }}"
+glance_oslomsg_notify_vhost: "{{ glance_oslomsg_rpc_vhost | default('/glance') }}"
 
 # Heat notifications
 heat_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
@@ -143,13 +134,23 @@ keystone_oslomsg_notify_userid: "{{ keystone_oslomsg_rpc_userid | default('keyst
 keystone_oslomsg_notify_password: "{{ keystone_ceilometer_enabled | ternary(keystone_oslomsg_rpc_password, '') }}"
 keystone_oslomsg_notify_vhost: "{{ keystone_oslomsg_rpc_vhost | default('/keystone') }}"
 
-# Swift notifications
-swift_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
-swift_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
-swift_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
-swift_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
-swift_oslomsg_notify_userid: "swift"
-swift_oslomsg_notify_vhost: "/swift"
+# Neutron notifications
+neutron_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+neutron_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+neutron_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+neutron_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+neutron_oslomsg_notify_userid: "{{ neutron_oslomsg_rpc_userid | default('neutron') }}"
+neutron_oslomsg_notify_password: "{{ neutron_ceilometer_enabled | ternary(neutron_oslomsg_rpc_password, '') }}"
+neutron_oslomsg_notify_vhost: "{{ neutron_oslomsg_rpc_vhost | default('/neutron') }}"
+
+# Nova notifications
+nova_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+nova_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+nova_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+nova_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+nova_oslomsg_notify_userid: "{{ nova_oslomsg_rpc_userid | default('nova') }}"
+nova_oslomsg_notify_password: "{{ nova_ceilometer_enabled | ternary(nova_oslomsg_rpc_password, '') }}"
+nova_oslomsg_notify_vhost: "{{ nova_oslomsg_rpc_vhost | default('/nova') }}"
 
 # Sahara notifications
 sahara_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
@@ -159,6 +160,23 @@ sahara_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
 sahara_oslomsg_notify_userid: "{{ sahara_oslomsg_rpc_userid | default('sahara') }}"
 sahara_oslomsg_notify_password: "{{ sahara_ceilometer_enabled | ternary(sahara_oslomsg_rpc_password, '') }}"
 sahara_oslomsg_notify_vhost: "{{ sahara_oslomsg_rpc_vhost | default('/sahara') }}"
+
+# Swift notifications
+swift_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+swift_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+swift_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+swift_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+swift_oslomsg_notify_userid: "swift"
+swift_oslomsg_notify_vhost: "/swift"
+
+# Trove notifications
+trove_oslomsg_notify_host_group: "{{ oslomsg_notify_host_group | default('rabbitmq_all') }}"
+trove_oslomsg_notify_transport: "{{ oslomsg_notify_transport | default('rabbit') }}"
+trove_oslomsg_notify_port: "{{ oslomsg_notify_port | default('5672') }}"
+trove_oslomsg_notify_use_ssl: "{{ oslomsg_notify_use_ssl | default(False) }}"
+trove_oslomsg_notify_userid: "{{ trove_oslomsg_rpc_userid | default('trove') }}"
+trove_oslomsg_notify_password: "{{ trove_ceilometer_enabled | ternary(trove_oslomsg_rpc_password, '') }}"
+trove_oslomsg_notify_vhost: "{{ trove_oslomsg_rpc_vhost | default('/trove') }}"
 
 ## (Qdrouterd) info
 # TODO(ansmith): Change structure when more backends will be supported
@@ -183,14 +201,16 @@ ceilometer_notification_workers_max: 16
 ceilometer_notification_workers: "{{ [[ansible_processor_vcpus|default(2) // 2, 1] | max, ceilometer_notification_workers_max] | min }}"
 
 # Enable/Disable Ceilometer per service
-glance_ceilometer_enabled: false
-nova_ceilometer_enabled: false
 cinder_ceilometer_enabled: false
-neutron_ceilometer_enabled: false
+designate_ceilometer_enabled: false
+glance_ceilometer_enabled: false
 heat_ceilometer_enabled: false
 keystone_ceilometer_enabled: false
-swift_ceilometer_enabled: false
+neutron_ceilometer_enabled: false
+nova_ceilometer_enabled: false
 sahara_ceilometer_enabled: false
+swift_ceilometer_enabled: false
+trove_ceilometer_enabled: false
 
 # Enable/Disable Telemetry partner services in Ceilometer
 # Defaults to True if the service is deployed.
