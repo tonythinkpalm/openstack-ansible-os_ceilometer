@@ -28,3 +28,5 @@ ceilometer_osprofiler_event_definitions_default_content: |
   {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_osprofiler_event_definitions_git_file_path) | map(attribute='content') | first }}
 ceilometer_polling_default_content: |
   {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_polling_git_file_path) | map(attribute='content') | first }}
+
+ceilometer_lib_dir: "{{ ceilometer_bin | dirname }}/lib/python2.7/site-packages"
