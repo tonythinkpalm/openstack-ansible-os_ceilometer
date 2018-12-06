@@ -14,12 +14,18 @@
 # limitations under the License.
 
 # These vars find a file on the deployment node, if it exists - otherwise the result is empty.
+ceilometer_data_meters_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_data_meters_default_file_path ~ ' 2>/dev/null || true') }}"
+ceilometer_event_definitions_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_event_definitions_default_file_path ~ ' 2>/dev/null || true') }}"
 ceilometer_gnocchi_resources_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_gnocchi_resources_default_file_path ~ ' 2>/dev/null || true') }}"
 ceilometer_loadbalancer_v2_meter_definitions_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_loadbalancer_v2_meter_definitions_default_file_path ~ ' 2>/dev/null || true') }}"
 ceilometer_osprofiler_event_definitions_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_osprofiler_event_definitions_default_file_path ~ ' 2>/dev/null || true') }}"
 ceilometer_polling_user_content: "{{ lookup('pipe', 'cat ' ~ ceilometer_polling_default_file_path ~ ' 2>/dev/null || true') }}"
 
 # These vars find the appropriate result content from the with_items loop
+ceilometer_data_meters_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location  ~ '/' ~ ceilometer_data_meters_git_file_path) | map(attribute='content') | first }}
+ceilometer_event_definitions_default_content: |
+  {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location  ~ '/' ~ ceilometer_event_definitions_git_file_path) | map(attribute='content') | first }} 
 ceilometer_gnocchi_resources_default_content: |
   {{ _git_file_fetch.results | selectattr('item', 'equalto', ceilometer_git_config_lookup_location ~ '/' ~ ceilometer_gnocchi_resources_git_file_path) | map(attribute='content') | first }}
 ceilometer_loadbalancer_v2_meter_definitions_default_content: |
