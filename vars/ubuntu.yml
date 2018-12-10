@@ -20,6 +20,8 @@ cache_timeout: 600
 ceilometer_distro_packages:
   - git
   - python-keystoneclient # Keystoneclient needed to OSA keystone lib
+  - python-libvirt
+  - python3-libvirt
 
 ceilometer_devel_distro_packages: []
 
@@ -37,3 +39,7 @@ ceilometer_developer_mode_distro_packages:
   - libxml2-dev
   - libxslt1-dev
   - pkg-config
+
+ceilometer_packages_to_symlink:
+  - python-libvirt
+  - python3-libvirt

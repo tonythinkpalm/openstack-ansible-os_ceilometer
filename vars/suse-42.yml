@@ -16,6 +16,7 @@
 
 ceilometer_distro_packages:
   - git-core
+  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('libvirt-python', 'python2-libvirt-python') }}"
   - python-keystoneclient # Keystoneclient needed to OSA keystone lib
 
 ceilometer_devel_distro_packages:
@@ -37,3 +38,6 @@ ceilometer_developer_mode_distro_packages:
   - libvirt-devel
   - libxml2-devel
   - libxslt-devel
+
+ceilometer_packages_to_symlink:
+  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('libvirt-python', 'python2-libvirt-python') }}"

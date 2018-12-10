@@ -15,6 +15,7 @@
 
 ceilometer_distro_packages:
   - git
+  - libvirt-python
   - python-keystoneclient # Keystoneclient needed to OSA keystone lib
 
 ceilometer_devel_distro_packages:
@@ -34,3 +35,6 @@ ceilometer_developer_mode_distro_packages:
   - libvirt-devel
   - libxml2-devel
   - libxslt-devel
+
+ceilometer_packages_to_symlink:
+  - libvirt-python
