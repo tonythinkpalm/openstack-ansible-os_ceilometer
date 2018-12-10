@@ -236,7 +236,6 @@ ceilometer_pip_packages:
   - ceilometermiddleware
   - cryptography
   - gnocchiclient
-  - libvirt-python
   - osprofiler
   - PyMySQL
   - pymongo

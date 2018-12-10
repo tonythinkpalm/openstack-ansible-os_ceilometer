@@ -15,6 +15,7 @@
 
 ceilometer_distro_packages:
   - git
+  - libvirt-python
 
 ceilometer_devel_distro_packages:
   - systemd-devel
@@ -38,3 +39,6 @@ ceilometer_oslomsg_amqp1_distro_packages:
   - cyrus-sasl-lib
   - cyrus-sasl-plain
   - cyrus-sasl-md5
+
+ceilometer_packages_to_symlink:
+  - libvirt-python

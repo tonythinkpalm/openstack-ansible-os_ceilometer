@@ -19,6 +19,8 @@ cache_timeout: 600
 # Common apt packages
 ceilometer_distro_packages:
   - git
+  - python-libvirt
+  - python3-libvirt
 
 ceilometer_devel_distro_packages: []
 
@@ -40,3 +42,7 @@ ceilometer_developer_mode_distro_packages:
 ceilometer_oslomsg_amqp1_distro_packages:
   - libsasl2-modules
   - sasl2-bin
+
+ceilometer_packages_to_symlink:
+  - python-libvirt
+  - python3-libvirt

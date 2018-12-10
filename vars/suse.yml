@@ -16,6 +16,7 @@
 
 ceilometer_distro_packages:
   - git-core
+  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('libvirt-python', 'python2-libvirt-python') }}"
 
 ceilometer_devel_distro_packages:
   - pkg-config
@@ -41,3 +42,6 @@ ceilometer_oslomsg_amqp1_distro_packages:
   - cyrus-sasl
   - cyrus-sasl-plain
   - cyrus-sasl-digestmd5
+
+ceilometer_packages_to_symlink:
+  - "{{ (ansible_distribution_version is version ('42', '>=')) | ternary('libvirt-python', 'python2-libvirt-python') }}"

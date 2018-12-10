@@ -48,3 +48,41 @@
       - section: "ceilometer"
         option: "venv_tag"
         value: "{{ ceilometer_venv_tag }}"
+
+# Note (odyssey4me):
+# These python libraries have C bindings which tend to be very
+# particular about the version of their companion packages.
+# To ensure things run smoothly for stable releases, we opt to
+# use the distro packages for these and symlink the appropriate
+# library files and binding into the venv.
+
+- name: Find the venv's python version
+  find:
+    paths: "{{ ceilometer_bin | dirname }}/lib/"
+    patterns: "python*"
+    file_type: directory
+    recurse: no
+  register: python_venv_details
+
+- name: Set python venvs details
+  set_fact:
+    venv_python_version: "{{ (python_venv_details.files[0].path | basename) }}"
+    venv_python_major_version: "{{ (python_venv_details.files[0].path | basename)[:-2] }}"
+    venv_python_lib_folder: "{{ python_venv_details.files[0].path }}"
+
+- name: Search for lib files to link
+  shell: >-
+    {{ (ansible_pkg_mgr == 'apt') | ternary('dpkg -L ' ~ (ceilometer_packages_to_symlink | join(' ')), 'rpm -ql ' ~ (ceilometer_packages_to_symlink | join(' ')) ) }}
+    | egrep '^.*{{ venv_python_major_version }}.*/(site|dist)-packages/.*'
+  args:
+    warn: no
+  changed_when: false
+  register: _python_files
+
+- name: Link the python host package files into venv
+  file:
+    src: "{{ item }}"
+    dest: "{{ venv_python_lib_folder }}/site-packages/{{ item | basename }}"
+    state: link
+    force: yes
+  with_items: "{{ _python_files.stdout_lines }}"
