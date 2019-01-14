@@ -16,3 +16,5 @@
 ceilometer_package_list: "{{ ceilometer_distro_packages + ceilometer_devel_distro_packages }}"
 
 _ceilometer_bin: "/openstack/venvs/ceilometer-{{ ceilometer_venv_tag }}/bin"
+
+ceilometer_lib_dir: "{{ _ceilometer_bin | dirname }}/lib/python2.7/site-packages"
