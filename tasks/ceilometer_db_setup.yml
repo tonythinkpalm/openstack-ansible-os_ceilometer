@@ -15,7 +15,7 @@
 
 - name: check for gnocchi resource file
   stat:
-    path: "/etc/ceilometer/gnocchi_resources.yaml"
+    path: "{{ ceilometer_lib_dir }}/ceilometer/publisher/data/gnocchi_resources.yaml"
   register: gnocchi_resource_file
 
 - name: Initialize Gnocchi database by creating ceilometer resources
