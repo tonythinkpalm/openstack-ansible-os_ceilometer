@@ -215,8 +215,8 @@ trove_ceilometer_enabled: "{{ (groups['trove_all'] is defined) and (groups['trov
 
 # Enable/Disable Telemetry partner services in Ceilometer
 # Defaults to True if the service is deployed.
-ceilometer_aodh_enabled: false
-ceilometer_gnocchi_enabled: false
+ceilometer_aodh_enabled: true
+ceilometer_gnocchi_enabled: true
 
 # TODO (andymccr): Remove in Queen release (along with config template overrides)
 # Sampling interval for ceilometer-polling services
